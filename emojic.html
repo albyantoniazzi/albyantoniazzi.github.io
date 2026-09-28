@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>emoji⌘C</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Google Sans Code & Google Official Noto Color Emoji -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..700;1,300..700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Google Sans Code"', 'ui-monospace', 'Menlo', 'monospace'],
+            mono: ['"Google Sans Code"', 'monospace'],
+          },
+          colors: {
+            beige: {
+              50: '#fbf9f4',
+              100: '#f7f3ea',
+              200: '#eee6d4',
+              300: '#e3d8be',
+              400: '#cbbda0',
+              700: '#524b3e',
+              800: '#393328',
+              900: '#221f18',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Solid background system */
+    :root {
+      --bg-color: #EBF1E5;
+      --text-color: #2A2E23;
+    }
+
+    html.dark {
+      --bg-color: #1E2020;
+      --text-color: #f3f4f6;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Global smooth transition for theme change */
+    header, footer, .emoji-card, input, section > div {
+      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                  color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Google official emoji rendering (Noto Color Emoji) */
+    .emoji-font {
+      font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      font-size: clamp(2.1rem, 3.8vw, 3.1rem);
+      line-height: 1;
+    }
+
+    /* Custom theme scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    html.dark ::-webkit-scrollbar-track {
+      background: #1E2020;
+    }
+    html.dark ::-webkit-scrollbar-thumb {
+      background: #333636;
+      border-radius: 9999px;
+    }
+    html.dark ::-webkit-scrollbar-thumb:hover {
+      background: #454949;
+    }
+
+    html:not(.dark) ::-webkit-scrollbar-track {
+      background: #EBF1E5;
+    }
+    html:not(.dark) ::-webkit-scrollbar-thumb {
+      background: #c7d2c0;
+      border-radius: 9999px;
+    }
+    html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+      background: #b0bfa7;
+    }
+
+    /* Yin Yang rotation transition */
+    #theme-icon {
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center;
+    }
+
+    /* Subtle press animation */
+    .emoji-card:active {
+      transform: scale(0.9);
+    }
+    /* Variant indicator pip in corner */
+    .has-variants::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 9999px;
+      background-color: currentColor;
+      opacity: 0.4;
+    }
+
+    /* Long-press variant popover bubble */
+    #variant-popover {
+      position: fixed;
+      z-index: 60;
+      transform: translate(-50%, -100%) translateY(-10px);
+      transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #variant-popover.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -100%) translateY(-2px) scale(0.95);
+    }
+  </style>
+</head>
+
+<body class="text-[#2A2E23] dark:text-neutral-100 font-sans min-h-screen flex flex-col selection:bg-neutral-300 dark:selection:bg-neutral-800 antialiased">
+
+  <!-- Header with Live Search & Yin-Yang Dark/Light Toggle on the right -->
+  <header class="sticky top-0 z-30 bg-[#EBF1E5]/85 dark:bg-[#1E2020]/85 backdrop-blur-md border-b border-[#2A2E23]/10 dark:border-white/10 py-3 sm:py-3.5">
+    <div class="w-full px-[10%] flex items-center justify-between gap-3 sm:gap-6">
+      
+      <!-- Logo / Title aligned flush with grid left (clickable refresh + pulsing green light dot) -->
+      <a 
+        href="#" 
+        onclick="window.location.reload(); return false;" 
+        class="flex items-center space-x-2.5 shrink-0 group cursor-pointer select-none"
+        title="Refresh page"
+        aria-label="Refresh page"
+      >
+        <span class="relative flex h-2.5 w-2.5 items-center justify-center">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <h1 class="text-base sm:text-lg font-bold tracking-tight text-[#2A2E23] dark:text-white font-mono group-hover:opacity-80 transition-opacity">
+          emoji<span class="opacity-75 font-normal">⌘C</span>
+        </h1>
+      </a>
+
+      <!-- Search Input with Magnifier Lens Icon (No Border, Darker in Light Mode, Brighter in Dark Mode) -->
+      <div class="relative flex-1 max-w-sm sm:max-w-md mx-auto">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#2A2E23]/60 dark:text-neutral-400">
+          <svg class="w-4 h-4 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+          </svg>
+        </div>
+
+        <input 
+          id="search-input" 
+          type="text" 
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search emojis"
+          class="w-full pl-9 pr-8 py-1.5 sm:py-2 bg-[#d8e2d1] hover:bg-[#d0dc8] focus:bg-[#d0ddc7] dark:bg-[#2d3030] dark:hover:bg-[#353939] dark:focus:bg-[#353939] text-sm text-[#2A2E23] dark:text-white rounded-full border-0 outline-none focus:outline-none focus:ring-0 font-sans shadow-sm transition-colors"
+        />
+
+        <!-- Clear Search Button -->
+        <button 
+          id="clear-btn" 
+          class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-[#2A2E23]/60 hover:text-[#2A2E23] dark:text-neutral-400 dark:hover:text-white"
+          aria-label="Clear search"
+          type="button"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dark / Light Mode Selector aligned flush with grid right -->
+      <div class="flex items-center shrink-0">
+        <button 
+          id="theme-toggle-btn"
+          type="button"
+          class="p-1 rounded-md text-[#2A2E23]/60 hover:text-[#2A2E23] dark:text-neutral-400 dark:hover:text-white hover:scale-105 active:scale-95 transition-all focus:outline-none"
+          title="Toggle Light / Dark mode"
+          aria-label="Toggle theme mode"
+        >
+          <!-- Authentic Minimalist Taijitu (Yin-Yang) SVG matching taiwantop design -->
+          <svg id="theme-icon" class="w-5 h-5 sm:w-6 sm:h-6 block drop-shadow-sm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Base White Circle with Adaptive Perimeter Stroke -->
+            <circle cx="50" cy="50" r="47" fill="#ffffff" class="stroke-[#2A2E23] dark:stroke-neutral-400" stroke-width="3" />
+            <!-- Black Half (Taiji fish curving from top to bottom) -->
+            <path d="M 50,3 A 47,47 0 0,1 50,97 A 23.5,23.5 0 0,1 50,50 A 23.5,23.5 0 0,0 50,3 Z" fill="#000000" />
+            <!-- White Dot inside the Black half (center 50, 73.5) -->
+            <circle cx="50" cy="73.5" r="7" fill="#ffffff" />
+            <!-- Black Dot inside the White half (center 50, 26.5) -->
+            <circle cx="50" cy="26.5" r="7" fill="#000000" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow w-full px-[10%] py-4 sm:py-6">
+    <div id="emoji-container" class="space-y-8">
+      <!-- Injected via JavaScript grouped or flat list -->
+    </div>
+
+    <!-- Empty search fallback state -->
+    <div id="empty-state" class="hidden flex flex-col items-center justify-center py-20 text-center">
+      <div class="text-5xl mb-4 select-none">🔍</div>
+      <p class="text-[#2A2E23] dark:text-neutral-300 text-lg font-medium">No matching emojis found</p>
+      <p class="text-[#2A2E23]/70 dark:text-neutral-500 text-sm mt-1">Try another keyword like "happy", "food", "cat", or "heart"</p>
+      <button 
+        id="reset-search-btn" 
+        class="mt-4 px-4 py-1.5 text-xs text-[#2A2E23] dark:text-neutral-300 bg-[#d8e2d1] hover:bg-[#cee0ca] dark:bg-[#2d3030] dark:hover:bg-[#353939] rounded-full transition-colors"
+      >
+        Clear filter
+      </button>
+    </div>
+  </main>
+
+  <!-- Long-press Variant Selector Popover -->
+  <div 
+    id="variant-popover" 
+    class="hidden bg-[#EBF1E5]/95 dark:bg-[#282B2B]/95 border border-[#2A2E23]/15 dark:border-neutral-700 rounded-xl p-1.5 shadow-2xl backdrop-blur-md flex items-center gap-1 select-none"
+    role="dialog"
+    aria-label="Emoji variations"
+  >
+    <!-- Injected dynamically with tone options -->
+  </div>
+
+  <!-- Centered Modal Toast for copy feedback -->
+  <div 
+    id="toast" 
+    class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#EBF1E5]/95 dark:bg-[#282B2B]/95 text-[#2A2E23] dark:text-white border border-[#2A2E23]/15 dark:border-neutral-700/80 px-8 py-6 rounded-2xl shadow-2xl flex flex-col items-center justify-center space-y-3 opacity-0 pointer-events-none scale-90 transition-all duration-200 z-50 backdrop-blur-md min-w-[220px] max-w-sm text-center"
+    role="status"
+    aria-live="polite"
+  >
+    <span id="toast-emoji" class="text-6xl sm:text-7xl emoji-font select-none leading-none drop-shadow-sm">✨</span>
+    <div class="space-y-0.5">
+      <p class="text-[10px] uppercase tracking-wider font-mono text-[#2A2E23]/60 dark:text-neutral-400">Copied to clipboard</p>
+      <p id="toast-text" class="text-base sm:text-lg font-medium leading-snug font-sans capitalize"></p>
+    </div>
+  </div>
+
+  <footer class="border-t border-[#2A2E23]/10 dark:border-white/10 bg-[#EBF1E5]/70 dark:bg-[#1E2020] py-4 px-[10%] text-center select-none text-xs text-[#2A2E23]/70 dark:text-neutral-500 transition-colors">
+    <p>
+      by 
+      <a 
+        href="https://github.com/albyantoniazzi" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="text-[#2A2E23] dark:text-neutral-400 hover:text-black dark:hover:text-white underline decoration-[#2A2E23]/40 dark:decoration-neutral-700 hover:decoration-black dark:hover:decoration-white transition-colors"
+      >@albyantoniazzi</a>
+    </p>
+  </footer>
+
+  <script>
+    // Fitzpatrick Skin Tone Modifiers
+    const SKIN_TONES = [
+      { name: "Default", mod: "" },
+      { name: "Light skin tone", mod: "\u{1F3FB}" },
+      { name: "Medium-light skin tone", mod: "\u{1F3FC}" },
+      { name: "Medium skin tone", mod: "\u{1F3FD}" },
+      { name: "Medium-dark skin tone", mod: "\u{1F3FE}" },
+      { name: "Dark skin tone", mod: "\u{1F3FF}" }
+    ];
+
+    // Helper to calculate regional indicator pair for any 2-letter ISO country code
+    function getCountryFlag(code) {
+      const codeUpper = code.toUpperCase();
+      const first = 0x1F1E6 + (codeUpper.charCodeAt(0) - 65);
+      const second = 0x1F1E6 + (codeUpper.charCodeAt(1) - 65);
+      return String.fromCodePoint(first, second);
+    }
+
+    // Comprehensive ISO 3166-1 country & territory list
+    const COUNTRIES_LIST = [
+      { code: "AD", name: "Andorra" }, { code: "AE", name: "United Arab Emirates", tags: ["uae", "dubai"] },
+      { code: "AF", name: "Afghanistan" }, { code: "AG", name: "Antigua & Barbuda" },
+      { code: "AI", name: "Anguilla" }, { code: "AL", name: "Albania" },
+      { code: "AM", name: "Armenia" }, { code: "AO", name: "Angola" },
+      { code: "AQ", name: "Antarctica" }, { code: "AR", name: "Argentina" },
+      { code: "AS", name: "American Samoa" }, { code: "AT", name: "Austria" },
+      { code: "AU", name: "Australia", tags: ["aussie"] }, { code: "AW", name: "Aruba" },
+      { code: "AX", name: "Åland Islands" }, { code: "AZ", name: "Azerbaijan" },
+      { code: "BA", name: "Bosnia & Herzegovina" }, { code: "BB", name: "Barbados" },
+      { code: "BD", name: "Bangladesh" }, { code: "BE", name: "Belgium" },
+      { code: "BF", name: "Burkina Faso" }, { code: "BG", name: "Bulgaria" },
+      { code: "BH", name: "Bahrain" }, { code: "BI", name: "Burundi" },
+      { code: "BJ", name: "Benin" }, { code: "BL", name: "St. Barthélemy" },
+      { code: "BM", name: "Bermuda" }, { code: "BN", name: "Brunei" },
+      { code: "BO", name: "Bolivia" }, { code: "BQ", name: "Caribbean Netherlands" },
+      { code: "BR", name: "Brazil", tags: ["brasil"] }, { code: "BS", name: "Bahamas" },
+      { code: "BT", name: "Bhutan" }, { code: "BV", name: "Bouvet Island" },
+      { code: "BW", name: "Botswana" }, { code: "BY", name: "Belarus" },
+      { code: "BZ", name: "Belize" }, { code: "CA", name: "Canada" },
+      { code: "CC", name: "Cocos (Keeling) Islands" }, { code: "CD", name: "Congo - Kinshasa" },
+      { code: "CF", name: "Central African Republic" }, { code: "CG", name: "Congo - Brazzaville" },
+      { code: "CH", name: "Switzerland", tags: ["swiss"] }, { code: "CI", name: "Côte d'Ivoire" },
+      { code: "CK", name: "Cook Islands" }, { code: "CL", name: "Chile" },
+      { code: "CM", name: "Cameroon" }, { code: "CN", name: "China", tags: ["prc"] },
+      { code: "CO", name: "Colombia" }, { code: "CR", name: "Costa Rica" },
+      { code: "CU", name: "Cuba" }, { code: "CV", name: "Cape Verde" },
+      { code: "CW", name: "Curaçao" }, { code: "CX", name: "Christmas Island" },
+      { code: "CY", name: "Cyprus" }, { code: "CZ", name: "Czechia", tags: ["czech republic"] },
+      { code: "DE", name: "Germany", tags: ["deutschland"] }, { code: "DJ", name: "Djibouti" },
+      { code: "DK", name: "Denmark" }, { code: "DM", name: "Dominica" },
+      { code: "DO", name: "Dominican Republic" }, { code: "DZ", name: "Algeria" },
+      { code: "EC", name: "Ecuador" }, { code: "EE", name: "Estonia" },
+      { code: "EG", name: "Egypt" }, { code: "EH", name: "Western Sahara" },
+      { code: "ER", name: "Eritrea" }, { code: "ES", name: "Spain", tags: ["espana"] },
+      { code: "ET", name: "Ethiopia" }, { code: "FI", name: "Finland" },
+      { code: "FJ", name: "Fiji" }, { code: "FK", name: "Falkland Islands" },
+      { code: "FM", name: "Micronesia" }, { code: "FO", name: "Faroe Islands" },
+      { code: "FR", name: "France", tags: ["french"] }, { code: "GA", name: "Gabon" },
+      { code: "GB", name: "United Kingdom", tags: ["uk", "britain", "england", "scotland", "wales"] },
+      { code: "GD", name: "Grenada" }, { code: "GE", name: "Georgia" },
+      { code: "GF", name: "French Guiana" }, { code: "GG", name: "Guernsey" },
+      { code: "GH", name: "Ghana" }, { code: "GI", name: "Gibraltar" },
+      { code: "GL", name: "Greenland" }, { code: "GM", name: "Gambia" },
+      { code: "GN", name: "Guinea" }, { code: "GP", name: "Guadeloupe" },
+      { code: "GQ", name: "Equatorial Guinea" }, { code: "GR", name: "Greece" },
+      { code: "GS", name: "South Georgia & South Sandwich Islands" },
+      { code: "GT", name: "Guatemala" }, { code: "GU", name: "Guam" },
+      { code: "GW", name: "Guinea-Bissau" }, { code: "GY", name: "Guyana" },
+      { code: "HK", name: "Hong Kong" }, { code: "HM", name: "Heard & McDonald Islands" },
+      { code: "HN", name: "Honduras" }, { code: "HR", name: "Croatia" },
+      { code: "HT", name: "Haiti" }, { code: "HU", name: "Hungary" },
+      { code: "ID", name: "Indonesia" }, { code: "IE", name: "Ireland" },
+      { code: "IL", name: "Israel" }, { code: "IM", name: "Isle of Man" },
+      { code: "IN", name: "India", tags: ["bharat"] }, { code: "IO", name: "British Indian Ocean Territory" },
+      { code: "IQ", name: "Iraq" }, { code: "IR", name: "Iran" },
+      { code: "IS", name: "Iceland" }, { code: "IT", name: "Italy", tags: ["italia"] },
+      { code: "JE", name: "Jersey" }, { code: "JM", name: "Jamaica" },
+      { code: "JO", name: "Jordan" }, { code: "JP", name: "Japan", tags: ["nihon"] },
+      { code: "KE", name: "Kenya" }, { code: "KG", name: "Kyrgyzstan" },
+      { code: "KH", name: "Cambodia" }, { code: "KI", name: "Kiribati" },
+      { code: "KM", name: "Comoros" }, { code: "KN", name: "St. Kitts & Nevis" },
+      { code: "KP", name: "North Korea" }, { code: "KR", name: "South Korea" },
+      { code: "KW", name: "Kuwait" }, { code: "KY", name: "Cayman Islands" },
+      { code: "KZ", name: "Kazakhstan" }, { code: "LA", name: "Laos" },
+      { code: "LB", name: "Lebanon" }, { code: "LC", name: "St. Lucia" },
+      { code: "LI", name: "Liechtenstein" }, { code: "LK", name: "Sri Lanka" },
+      { code: "LR", name: "Liberia" }, { code: "LS", name: "Lesotho" },
+      { code: "LT", name: "Lithuania" }, { code: "LU", name: "Luxembourg" },
+      { code: "LV", name: "Latvia" }, { code: "LY", name: "Libya" },
+      { code: "MA", name: "Morocco" }, { code: "MC", name: "Monaco" },
+      { code: "MD", name: "Moldova" }, { code: "ME", name: "Montenegro" },
+      { code: "MF", name: "St. Martin" }, { code: "MG", name: "Madagascar" },
+      { code: "MH", name: "Marshall Islands" }, { code: "MK", name: "North Macedonia" },
+      { code: "ML", name: "Mali" }, { code: "MM", name: "Myanmar (Burma)" },
+      { code: "MN", name: "Mongolia" }, { code: "MO", name: "Macao" },
+      { code: "MP", name: "Northern Mariana Islands" }, { code: "MQ", name: "Martinique" },
+      { code: "MR", name: "Mauritania" }, { code: "MS", name: "Montserrat" },
+      { code: "MT", name: "Malta" }, { code: "MU", name: "Mauritius" },
+      { code: "MV", name: "Maldives" }, { code: "MW", name: "Malawi" },
+      { code: "MX", name: "Mexico" }, { code: "MY", name: "Malaysia" },
+      { code: "MZ", name: "Mozambique" }, { code: "NA", name: "Namibia" },
+      { code: "NC", name: "New Caledonia" }, { code: "NE", name: "Niger" },
+      { code: "NF", name: "Norfolk Island" }, { code: "NG", name: "Nigeria" },
+      { code: "NI", name: "Nicaragua" }, { code: "NL", name: "Netherlands", tags: ["holland"] },
+      { code: "NO", name: "Norway" }, { code: "NP", name: "Nepal" },
+      { code: "NR", name: "Nauru" }, { code: "NU", name: "Niue" },
+      { code: "NZ", name: "New Zealand", tags: ["kiwi"] }, { code: "OM", name: "Oman" },
+      { code: "PA", name: "Panama" }, { code: "PE", name: "Peru" },
+      { code: "PF", name: "French Polynesia" }, { code: "PG", name: "Papua New Guinea" },
+      { code: "PH", name: "Philippines" }, { code: "PK", name: "Pakistan" },
+      { code: "PL", name: "Poland" }, { code: "PM", name: "St. Pierre & Miquelon" },
+      { code: "PN", name: "Pitcairn Islands" }, { code: "PR", name: "Puerto Rico" },
+      { code: "PS", name: "Palestinian Territories", tags: ["palestine"] },
+      { code: "PT", name: "Portugal" }, { code: "PW", name: "Palau" },
+      { code: "PY", name: "Paraguay" }, { code: "QA", name: "Qatar" },
+      { code: "RE", name: "Réunion" }, { code: "RO", name: "Romania" },
+      { code: "RS", name: "Serbia" }, { code: "RU", name: "Russia" },
+      { code: "RW", name: "Rwanda" }, { code: "SA", name: "Saudi Arabia" },
+      { code: "SB", name: "Solomon Islands" }, { code: "SC", name: "Seychelles" },
+      { code: "SD", name: "Sudan" }, { code: "SE", name: "Sweden" },
+      { code: "SG", name: "Singapore" }, { code: "SH", name: "St. Helena" },
+      { code: "SI", name: "Slovenia" }, { code: "SJ", name: "Svalbard & Jan Mayen" },
+      { code: "SK", name: "Slovakia" }, { code: "SL", name: "Sierra Leone" },
+      { code: "SM", name: "San Marino" }, { code: "SN", name: "Senegal" },
+      { code: "SO", name: "Somalia" }, { code: "SR", name: "Suriname" },
+      { code: "SS", name: "South Sudan" }, { code: "ST", name: "São Tomé & Príncipe" },
+      { code: "SV", name: "El Salvador" }, { code: "SX", name: "Sint Maarten" },
+      { code: "SY", name: "Syria" }, { code: "SZ", name: "Eswatini" },
+      { code: "TC", name: "Turks & Caicos Islands" }, { code: "TD", name: "Chad" },
+      { code: "TF", name: "French Southern Territories" }, { code: "TG", name: "Togo" },
+      { code: "TH", name: "Thailand" }, { code: "TJ", name: "Tajikistan" },
+      { code: "TK", name: "Tokelau" }, { code: "TL", name: "Timor-Leste" },
+      { code: "TM", name: "Turkmenistan" }, { code: "TN", name: "Tunisia" },
+      { code: "TO", name: "Tonga" }, { code: "TR", name: "Turkey", tags: ["turkiye"] },
+      { code: "TT", name: "Trinidad & Tobago" }, { code: "TV", name: "Tuvalu" },
+      { code: "TW", name: "Taiwan", tags: ["formosa", "taipei"] },
+      { code: "TZ", name: "Tanzania" }, { code: "UA", name: "Ukraine" },
+      { code: "UG", name: "Uganda" }, { code: "UM", name: "U.S. Outlying Islands" },
+      { code: "UN", name: "United Nations" }, { code: "US", name: "United States", tags: ["usa", "america"] },
+      { code: "UY", name: "Uruguay" }, { code: "UZ", name: "Uzbekistan" },
+      { code: "VA", name: "Vatican City", tags: ["holy see"] }, { code: "VC", name: "St. Vincent & Grenadines" },
+      { code: "VE", name: "Venezuela" }, { code: "VG", name: "British Virgin Islands" },
+      { code: "VI", name: "U.S. Virgin Islands" }, { code: "VN", name: "Vietnam" },
+      { code: "VU", name: "Vanuatu" }, { code: "WF", name: "Wallis & Futuna" },
+      { code: "WS", name: "Samoa" }, { code: "XK", name: "Kosovo" },
+      { code: "YE", name: "Yemen" }, { code: "YT", name: "Mayotte" },
+      { code: "ZA", name: "South Africa" }, { code: "ZM", name: "Zambia" },
+      { code: "ZW", name: "Zimbabwe" }
+    ];
+
+    // Helper to generate full skin-tone variants for any supported person/gesture emoji
+    function generateSkinToneVariants(baseChar, name) {
+      return SKIN_TONES.map(t => {
+        let charWithTone = baseChar;
+        if (t.mod) {
+          // If emoji contains ZWJ (\u200D), insert modifier after first character or before gender/role
+          if (baseChar.includes('\u200D')) {
+            const parts = baseChar.split('\u200D');
+            parts[0] = parts[0] + t.mod;
+            charWithTone = parts.join('\u200D');
+          } else {
+            charWithTone = baseChar + t.mod;
+          }
+        }
+        return {
+          char: charWithTone,
+          name: t.mod ? `${name} (${t.name})` : name
+        };
+      });
+    }
+
+    const BASE_DATABASE = [
+      // Smileys & Emotion
+      { char: "😀", name: "grinning face", cat: "Smileys & Emotion", tags: ["smile", "happy", "joy"] },
+      { char: "😃", name: "grinning face with big eyes", cat: "Smileys & Emotion", tags: ["happy", "cheerful"] },
+      { char: "😄", name: "grinning face with smiling eyes", cat: "Smileys & Emotion", tags: ["laugh", "happy"] },
+      { char: "😁", name: "beaming face with smiling eyes", cat: "Smileys & Emotion", tags: ["grin", "teeth"] },
+      { char: "😆", name: "grinning squinting face", cat: "Smileys & Emotion", tags: ["haha", "laugh", "lol"] },
+      { char: "😅", name: "grinning face with sweat", cat: "Smileys & Emotion", tags: ["sweat", "relief", "phew"] },
+      { char: "🤣", name: "rolling on the floor laughing", cat: "Smileys & Emotion", tags: ["rofl", "lol", "laugh"] },
+      { char: "😂", name: "face with tears of joy", cat: "Smileys & Emotion", tags: ["crying", "laugh", "happy", "tears"] },
+      { char: "🙂", name: "slightly smiling face", cat: "Smileys & Emotion", tags: ["smile", "content"] },
+      { char: "🙃", name: "upside-down face", cat: "Smileys & Emotion", tags: ["sarcasm", "silly", "irony"] },
+      { char: "🫠", name: "melting face", cat: "Smileys & Emotion", tags: ["hot", "melt", "disappear", "awkward"] },
+      { char: "😉", name: "winking face", cat: "Smileys & Emotion", tags: ["wink", "flirt", "joke"] },
+      { char: "😊", name: "smiling face with smiling eyes", cat: "Smileys & Emotion", tags: ["blush", "proud", "warm"] },
+      { char: "😇", name: "smiling face with halo", cat: "Smileys & Emotion", tags: ["angel", "innocent", "pure"] },
+      { char: "🥰", name: "smiling face with hearts", cat: "Smileys & Emotion", tags: ["love", "crush", "adore"] },
+      { char: "😍", name: "smiling face with heart-eyes", cat: "Smileys & Emotion", tags: ["love", "infatuation", "heart"] },
+      { char: "🤩", name: "star-struck", cat: "Smileys & Emotion", tags: ["stars", "excited", "wow", "amazing"] },
+      { char: "😘", name: "face blowing a kiss", cat: "Smileys & Emotion", tags: ["kiss", "love", "romance"] },
+      { char: "😗", name: "kissing face", cat: "Smileys & Emotion", tags: ["kiss", "whistle"] },
+      { char: "😚", name: "kissing face with closed eyes", cat: "Smileys & Emotion", tags: ["kiss", "blush"] },
+      { char: "😋", name: "face savoring food", cat: "Smileys & Emotion", tags: ["yum", "delicious", "tasty", "tongue"] },
+      { char: "😛", name: "face with tongue", cat: "Smileys & Emotion", tags: ["playful", "joke"] },
+      { char: "😜", name: "winking face with tongue", cat: "Smileys & Emotion", tags: ["crazy", "prank", "silly"] },
+      { char: "🤪", name: "zany face", cat: "Smileys & Emotion", tags: ["goofy", "wild", "bonkers"] },
+      { char: "😝", name: "squinting face with tongue", cat: "Smileys & Emotion", tags: ["playful", "fun"] },
+      { char: "🤑", name: "money-mouth face", cat: "Smileys & Emotion", tags: ["rich", "cash", "dollar", "wealth"] },
+      { char: "🤗", name: "smiling face with open hands", cat: "Smileys & Emotion", tags: ["hug", "embrace", "welcome"] },
+      { char: "🫣", name: "face with peeking eye", cat: "Smileys & Emotion", tags: ["peek", "shy", "scared", "hide"] },
+      { char: "🤫", name: "shushing face", cat: "Smileys & Emotion", tags: ["quiet", "secret", "shh"] },
+      { char: "🤔", name: "thinking face", cat: "Smileys & Emotion", tags: ["think", "curious", "ponder", "hmm"] },
+      { char: "🫡", name: "saluting face", cat: "Smileys & Emotion", tags: ["salute", "respect", "yes sir"] },
+      { char: "🤐", name: "zipper-mouth face", cat: "Smileys & Emotion", tags: ["silent", "zip", "quiet"] },
+      { char: "🤨", name: "face with raised eyebrow", cat: "Smileys & Emotion", tags: ["skeptical", "suspicious", "doubt"] },
+      { char: "😐", name: "neutral face", cat: "Smileys & Emotion", tags: ["meh", "blank", "neutral"] },
+      { char: "😑", name: "expressionless face", cat: "Smileys & Emotion", tags: ["unimpressed", "bored"] },
+      { char: "😶", name: "face without mouth", cat: "Smileys & Emotion", tags: ["speechless", "quiet"] },
+      { char: "🫥", name: "dotted line face", cat: "Smileys & Emotion", tags: ["invisible", "ghost", "disappear"] },
+      { char: "😏", name: "smirking face", cat: "Smileys & Emotion", tags: ["smirk", "flirt", "cocky"] },
+      { char: "😒", name: "unamused face", cat: "Smileys & Emotion", tags: ["annoyed", "grumpy", "eyeroll"] },
+      { char: "🙄", name: "face with rolling eyes", cat: "Smileys & Emotion", tags: ["eyeroll", "frustrated"] },
+      { char: "😬", name: "grimacing face", cat: "Smileys & Emotion", tags: ["awkward", "nervous", "yikes"] },
+      { char: "🤥", name: "lying face", cat: "Smileys & Emotion", tags: ["pinocchio", "lie", "nose"] },
+      { char: "😌", name: "relieved face", cat: "Smileys & Emotion", tags: ["calm", "peaceful", "zen"] },
+      { char: "😔", name: "pensive face", cat: "Smileys & Emotion", tags: ["sad", "depressed", "down"] },
+      { char: "😪", name: "sleepy face", cat: "Smileys & Emotion", tags: ["tired", "snooze"] },
+      { char: "🤤", name: "drooling face", cat: "Smileys & Emotion", tags: ["drool", "hungry", "sleep"] },
+      { char: "😴", name: "sleeping face", cat: "Smileys & Emotion", tags: ["zzz", "sleep", "tired"] },
+      { char: "😷", name: "face with medical mask", cat: "Smileys & Emotion", tags: ["mask", "sick", "doctor"] },
+      { char: "🤒", name: "face with thermometer", cat: "Smileys & Emotion", tags: ["fever", "ill", "sick"] },
+      { char: "🤕", name: "face with head-bandage", cat: "Smileys & Emotion", tags: ["hurt", "injured", "pain"] },
+      { char: "🤢", name: "nauseated face", cat: "Smileys & Emotion", tags: ["gross", "vomit", "sick"] },
+      { char: "🤮", name: "face vomiting", cat: "Smileys & Emotion", tags: ["puke", "throwup", "disgust"] },
+      { char: "🤧", name: "sneezing face", cat: "Smileys & Emotion", tags: ["sneeze", "cold", "allergy"] },
+      { char: "🥵", name: "hot face", cat: "Smileys & Emotion", tags: ["summer", "heat", "sweat"] },
+      { char: "🥶", name: "cold face", cat: "Smileys & Emotion", tags: ["freezing", "ice", "winter"] },
+      { char: "🥴", name: "woozy face", cat: "Smileys & Emotion", tags: ["dizzy", "drunk", "tipsy"] },
+      { char: "😵", name: "face with crossed-out eyes", cat: "Smileys & Emotion", tags: ["dead", "shock", "knockout"] },
+      { char: "🤯", name: "exploding head", cat: "Smileys & Emotion", tags: ["mind blown", "shock", "brain"] },
+      { char: "🤠", name: "cowboy hat face", cat: "Smileys & Emotion", tags: ["western", "yeehaw", "hat"] },
+      { char: "🥳", name: "partying face", cat: "Smileys & Emotion", tags: ["celebrate", "birthday", "party"] },
+      { char: "🥸", name: "disguised face", cat: "Smileys & Emotion", tags: ["glasses", "mustache", "incognito"] },
+      { char: "😎", name: "smiling face with sunglasses", cat: "Smileys & Emotion", tags: ["cool", "sun", "swag"] },
+      { char: "🤓", name: "nerd face", cat: "Smileys & Emotion", tags: ["geek", "smart", "glasses"] },
+      { char: "🧐", name: "face with monocle", cat: "Smileys & Emotion", tags: ["curious", "fancy", "inspect"] },
+      { char: "😕", name: "confused face", cat: "Smileys & Emotion", tags: ["perplexed", "doubt"] },
+      { char: "😟", name: "worried face", cat: "Smileys & Emotion", tags: ["nervous", "anxious"] },
+      { char: "🙁", name: "slightly frowning face", cat: "Smileys & Emotion", tags: ["sad", "frown"] },
+      { char: "😮", name: "face with open mouth", cat: "Smileys & Emotion", tags: ["surprised", "whoa"] },
+      { char: "😯", name: "hushed face", cat: "Smileys & Emotion", tags: ["stunned", "quiet"] },
+      { char: "😲", name: "astonished face", cat: "Smileys & Emotion", tags: ["shocked", "amazed"] },
+      { char: "😳", name: "flushed face", cat: "Smileys & Emotion", tags: ["embarrassed", "blush", "wide eyes"] },
+      { char: "🥺", name: "pleading face", cat: "Smileys & Emotion", tags: ["puppy eyes", "beg", "cute"] },
+      { char: "🥹", name: "face holding back tears", cat: "Smileys & Emotion", tags: ["emotional", "gratitude", "touched"] },
+      { char: "😦", name: "frowning face with open mouth", cat: "Smileys & Emotion", tags: ["scared", "shock"] },
+      { char: "😨", name: "fearful face", cat: "Smileys & Emotion", tags: ["scared", "frightened"] },
+      { char: "😰", name: "anxious face with sweat", cat: "Smileys & Emotion", tags: ["nervous", "panic"] },
+      { char: "😥", name: "sad but relieved face", cat: "Smileys & Emotion", tags: ["phew", "close call"] },
+      { char: "😢", name: "crying face", cat: "Smileys & Emotion", tags: ["tear", "sad", "depressed"] },
+      { char: "😭", name: "loudly crying face", cat: "Smileys & Emotion", tags: ["sob", "bawl", "sad", "cry"] },
+      { char: "😱", name: "face screaming in fear", cat: "Smileys & Emotion", tags: ["horror", "munch", "scream"] },
+      { char: "😖", name: "confounded face", cat: "Smileys & Emotion", tags: ["stressed", "struggle"] },
+      { char: "😣", name: "persevering face", cat: "Smileys & Emotion", tags: ["trying", "endure"] },
+      { char: "😞", name: "disappointed face", cat: "Smileys & Emotion", tags: ["sad", "letdown"] },
+      { char: "😓", name: "downcast face with sweat", cat: "Smileys & Emotion", tags: ["hard work", "tired"] },
+      { char: "😩", name: "weary face", cat: "Smileys & Emotion", tags: ["exhausted", "done"] },
+      { char: "😫", name: "tired face", cat: "Smileys & Emotion", tags: ["fed up", "sleepy"] },
+      { char: "🥱", name: "yawning face", cat: "Smileys & Emotion", tags: ["sleepy", "bored"] },
+      { char: "😤", name: "face with steam from nose", cat: "Smileys & Emotion", tags: ["angry", "triumph", "frustrated"] },
+      { char: "😡", name: "enraged face", cat: "Smileys & Emotion", tags: ["mad", "red", "furious"] },
+      { char: "😠", name: "angry face", cat: "Smileys & Emotion", tags: ["mad", "annoyed"] },
+      { char: "🤬", name: "face with symbols on mouth", cat: "Smileys & Emotion", tags: ["curse", "swear", "furious"] },
+      { char: "😈", name: "smiling face with horns", cat: "Smileys & Emotion", tags: ["devil", "evil", "mischief"] },
+      { char: "👿", name: "angry face with horns", cat: "Smileys & Emotion", tags: ["demon", "devil"] },
+      { char: "💀", name: "skull", cat: "Smileys & Emotion", tags: ["dead", "skeleton", "death", "lol"] },
+      { char: "☠️", name: "skull and crossbones", cat: "Smileys & Emotion", tags: ["danger", "pirate", "poison"] },
+      { char: "💩", name: "pile of poo", cat: "Smileys & Emotion", tags: ["poop", "turd", "crap"] },
+      { char: "🤡", name: "clown face", cat: "Smileys & Emotion", tags: ["circus", "fool", "joker"] },
+      { char: "👹", name: "ogre", cat: "Smileys & Emotion", tags: ["japanese", "monster"] },
+      { char: "👺", name: "goblin", cat: "Smileys & Emotion", tags: ["japanese", "tengu"] },
+      { char: "👻", name: "ghost", cat: "Smileys & Emotion", tags: ["halloween", "spooky", "boo"] },
+      { char: "👽", name: "alien", cat: "Smileys & Emotion", tags: ["ufo", "space", "extraterrestrial"] },
+      { char: "👾", name: "alien monster", cat: "Smileys & Emotion", tags: ["arcade", "retro", "game"] },
+      { char: "🤖", name: "robot", cat: "Smileys & Emotion", tags: ["bot", "ai", "machine"] },
+
+      // Gestures & People (With Skin Tone Support)
+      { char: "👋", name: "waving hand", cat: "People & Gestures", tags: ["wave", "hello", "hi", "bye"], skinTone: true },
+      { char: "🤚", name: "raised back of hand", cat: "People & Gestures", tags: ["hand", "backhand"], skinTone: true },
+      { char: "🖐️", name: "hand with fingers splayed", cat: "People & Gestures", tags: ["five", "palm"], skinTone: true },
+      { char: "✋", name: "raised hand", cat: "People & Gestures", tags: ["high five", "stop"], skinTone: true },
+      { char: "🖖", name: "vulcan salute", cat: "People & Gestures", tags: ["spock", "star trek"], skinTone: true },
+      { char: "🫱", name: "rightwards hand", cat: "People & Gestures", tags: ["reach", "offer"], skinTone: true },
+      { char: "🫲", name: "leftwards hand", cat: "People & Gestures", tags: ["reach"], skinTone: true },
+      { char: "🫳", name: "palm down hand", cat: "People & Gestures", tags: ["drop"], skinTone: true },
+      { char: "🫴", name: "palm up hand", cat: "People & Gestures", tags: ["beckon", "lift"], skinTone: true },
+      { char: "👌", name: "OK hand", cat: "People & Gestures", tags: ["perfect", "okay", "good"], skinTone: true },
+      { char: "🤌", name: "pinched fingers", cat: "People & Gestures", tags: ["italian", "what do you want"], skinTone: true },
+      { char: "🤏", name: "pinching hand", cat: "People & Gestures", tags: ["tiny", "small", "little bit"], skinTone: true },
+      { char: "✌️", name: "victory hand", cat: "People & Gestures", tags: ["peace", "v", "two"], skinTone: true },
+      { char: "🤞", name: "crossed fingers", cat: "People & Gestures", tags: ["luck", "hopeful", "wish"], skinTone: true },
+      { char: "🫰", name: "hand with index and thumb crossed", cat: "People & Gestures", tags: ["kpop", "heart", "money"], skinTone: true },
+      { char: "🤟", name: "love-you gesture", cat: "People & Gestures", tags: ["rock", "ily"], skinTone: true },
+      { char: "🤘", name: "sign of the horns", cat: "People & Gestures", tags: ["metal", "rock on"], skinTone: true },
+      { char: "🤙", name: "call me hand", cat: "People & Gestures", tags: ["shaka", "hang loose", "phone"], skinTone: true },
+      { char: "👈", name: "pointing left", cat: "People & Gestures", tags: ["left", "point"], skinTone: true },
+      { char: "👉", name: "pointing right", cat: "People & Gestures", tags: ["right", "point"], skinTone: true },
+      { char: "👆", name: "pointing up", cat: "People & Gestures", tags: ["up", "point"], skinTone: true },
+      { char: "🖕", name: "middle finger", cat: "People & Gestures", tags: ["offensive", "finger"], skinTone: true },
+      { char: "👇", name: "pointing down", cat: "People & Gestures", tags: ["down", "point"], skinTone: true },
+      { char: "☝️", name: "index pointing up", cat: "People & Gestures", tags: ["up", "first"], skinTone: true },
+      { char: "🫵", name: "pointing at the viewer", cat: "People & Gestures", tags: ["you", "point"], skinTone: true },
+      { char: "👍", name: "thumbs up", cat: "People & Gestures", tags: ["like", "yes", "approve", "good"], skinTone: true },
+      { char: "👎", name: "thumbs down", cat: "People & Gestures", tags: ["dislike", "bad", "no"], skinTone: true },
+      { char: "✊", name: "raised fist", cat: "People & Gestures", tags: ["power", "fist"], skinTone: true },
+      { char: "👊", name: "oncoming fist", cat: "People & Gestures", tags: ["punch", "fist bump"], skinTone: true },
+      { char: "🤛", name: "left-facing fist", cat: "People & Gestures", tags: ["fist bump"], skinTone: true },
+      { char: "🤜", name: "right-facing fist", cat: "People & Gestures", tags: ["fist bump"], skinTone: true },
+      { char: "👏", name: "clapping hands", cat: "People & Gestures", tags: ["applause", "praise", "bravo"], skinTone: true },
+      { char: "🙌", name: "raising hands", cat: "People & Gestures", tags: ["celebrate", "hooray", "cheers"], skinTone: true },
+      { char: "🫶", name: "heart hands", cat: "People & Gestures", tags: ["love", "care", "heart"], skinTone: true },
+      { char: "👐", name: "open hands", cat: "People & Gestures", tags: ["open", "hug"], skinTone: true },
+      { char: "🤲", name: "palms up together", cat: "People & Gestures", tags: ["pray", "offering"], skinTone: true },
+      { char: "🤝", name: "handshake", cat: "People & Gestures", tags: ["deal", "agreement", "shake"] },
+      { char: "🙏", name: "folded hands", cat: "People & Gestures", tags: ["pray", "please", "thanks", "namaste"], skinTone: true },
+      { char: "💅", name: "nail polish", cat: "People & Gestures", tags: ["care", "slay", "beauty"], skinTone: true },
+      { char: "🤳", name: "selfie", cat: "People & Gestures", tags: ["phone", "camera", "photo"], skinTone: true },
+      { char: "💪", name: "flexed biceps", cat: "People & Gestures", tags: ["strong", "muscle", "workout"], skinTone: true },
+      { char: "🦵", name: "leg", cat: "People & Gestures", tags: ["limb", "kick"], skinTone: true },
+      { char: "🦶", name: "foot", cat: "People & Gestures", tags: ["toes", "stomp"], skinTone: true },
+      { char: "👂", name: "ear", cat: "People & Gestures", tags: ["hear", "listen"], skinTone: true },
+      { char: "🦻", name: "ear with hearing aid", cat: "People & Gestures", tags: ["accessibility"], skinTone: true },
+      { char: "👃", name: "nose", cat: "People & Gestures", tags: ["smell", "sniff"], skinTone: true },
+      { char: "🧠", name: "brain", cat: "People & Gestures", tags: ["mind", "smart", "intellect"] },
+      { char: "🫀", name: "anatomical heart", cat: "People & Gestures", tags: ["organ", "cardiology"] },
+      { char: "🫁", name: "lungs", cat: "People & Gestures", tags: ["breath", "organ"] },
+      { char: "👀", name: "eyes", cat: "People & Gestures", tags: ["look", "see", "stare"] },
+      { char: "👁️", name: "eye", cat: "People & Gestures", tags: ["vision", "look"] },
+      { char: "👅", name: "tongue", cat: "People & Gestures", tags: ["taste", "mouth"] },
+      { char: "👄", name: "mouth", cat: "People & Gestures", tags: ["lips", "kiss"] },
+      { char: "🫦", name: "biting lip", cat: "People & Gestures", tags: ["flirt", "anxious", "nervous"] },
+      { char: "👶", name: "baby", cat: "People & Gestures", tags: ["infant", "child"], skinTone: true },
+      { char: "🧒", name: "child", cat: "People & Gestures", tags: ["kid", "young"], skinTone: true },
+      { char: "👦", name: "boy", cat: "People & Gestures", tags: ["male", "child"], skinTone: true },
+      { char: "👧", name: "girl", cat: "People & Gestures", tags: ["female", "child"], skinTone: true },
+      { char: "🧑", name: "person", cat: "People & Gestures", tags: ["human", "adult"], skinTone: true },
+      { char: "👱", name: "person: blond hair", cat: "People & Gestures", tags: ["blonde"], skinTone: true },
+      { char: "👨", name: "man", cat: "People & Gestures", tags: ["guy", "adult", "male"], skinTone: true },
+      { char: "🧔", name: "person: beard", cat: "People & Gestures", tags: ["facial hair"], skinTone: true },
+      { char: "👩", name: "woman", cat: "People & Gestures", tags: ["lady", "female", "adult"], skinTone: true },
+      { char: "🧓", name: "older person", cat: "People & Gestures", tags: ["elder", "senior"], skinTone: true },
+      { char: "👴", name: "old man", cat: "People & Gestures", tags: ["grandpa", "elderly"], skinTone: true },
+      { char: "👵", name: "old woman", cat: "People & Gestures", tags: ["grandma", "elderly"], skinTone: true },
+      { char: "🧑‍⚕️", name: "health worker", cat: "People & Gestures", tags: ["doctor", "nurse"], skinTone: true },
+      { char: "🧑‍🎓", name: "student", cat: "People & Gestures", tags: ["graduate", "education"], skinTone: true },
+      { char: "🧑‍🏫", name: "teacher", cat: "People & Gestures", tags: ["professor", "school"], skinTone: true },
+      { char: "🧑‍⚖️", name: "judge", cat: "People & Gestures", tags: ["law", "court"], skinTone: true },
+      { char: "🧑‍🌾", name: "farmer", cat: "People & Gestures", tags: ["crops", "agriculture"], skinTone: true },
+      { char: "🧑‍🍳", name: "cook", cat: "People & Gestures", tags: ["chef", "food"], skinTone: true },
+      { char: "🧑‍🔧", name: "mechanic", cat: "People & Gestures", tags: ["repair", "tools"], skinTone: true },
+      { char: "🧑‍🏭", name: "factory worker", cat: "People & Gestures", tags: ["industry", "assembly"], skinTone: true },
+      { char: "🧑‍💼", name: "office worker", cat: "People & Gestures", tags: ["business", "manager"], skinTone: true },
+      { char: "🧑‍🔬", name: "scientist", cat: "People & Gestures", tags: ["lab", "research"], skinTone: true },
+      { char: "🧑‍💻", name: "technologist", cat: "People & Gestures", tags: ["developer", "coder", "programmer"], skinTone: true },
+      { char: "🧑‍🎤", name: "singer", cat: "People & Gestures", tags: ["music", "rockstar"], skinTone: true },
+      { char: "🧑‍🎨", name: "artist", cat: "People & Gestures", tags: ["painter", "art"], skinTone: true },
+      { char: "🧑‍✈️", name: "pilot", cat: "People & Gestures", tags: ["airplane", "flight"], skinTone: true },
+      { char: "🧑‍🚀", name: "astronaut", cat: "People & Gestures", tags: ["space", "nasa"], skinTone: true },
+      { char: "🧑‍🚒", name: "firefighter", cat: "People & Gestures", tags: ["fire", "hero"], skinTone: true },
+      { char: "👮", name: "police officer", cat: "People & Gestures", tags: ["cop", "law"], skinTone: true },
+      { char: "🕵️", name: "detective", cat: "People & Gestures", tags: ["sleuth", "spy"], skinTone: true },
+      { char: "💂", name: "guard", cat: "People & Gestures", tags: ["royal guard"], skinTone: true },
+      { char: "🥷", name: "ninja", cat: "People & Gestures", tags: ["stealth", "shadow"], skinTone: true },
+      { char: "👷", name: "construction worker", cat: "People & Gestures", tags: ["builder", "hard hat"], skinTone: true },
+      { char: "👸", name: "princess", cat: "People & Gestures", tags: ["royalty", "crown"], skinTone: true },
+      { char: "🤴", name: "prince", cat: "People & Gestures", tags: ["royalty", "crown"], skinTone: true },
+      { char: "🧕", name: "woman with headscarf", cat: "People & Gestures", tags: ["hijab"], skinTone: true },
+      { char: "🤵", name: "person in tuxedo", cat: "People & Gestures", tags: ["groom", "formal"], skinTone: true },
+      { char: "👰", name: "person with veil", cat: "People & Gestures", tags: ["bride", "wedding"], skinTone: true },
+      { char: "🤰", name: "pregnant woman", cat: "People & Gestures", tags: ["baby", "maternity"], skinTone: true },
+      { char: "🫄", name: "pregnant person", cat: "People & Gestures", tags: ["maternity"], skinTone: true },
+      { char: "🫅", name: "person with crown", cat: "People & Gestures", tags: ["monarch", "royal"], skinTone: true },
+      { char: "🦸", name: "superhero", cat: "People & Gestures", tags: ["hero", "powers"], skinTone: true },
+      { char: "🦹", name: "supervillain", cat: "People & Gestures", tags: ["villain", "evil"], skinTone: true },
+      { char: "🧙", name: "mage", cat: "People & Gestures", tags: ["wizard", "magic"], skinTone: true },
+      { char: "🧚", name: "fairy", cat: "People & Gestures", tags: ["wings", "magical"], skinTone: true },
+      { char: "🧛", name: "vampire", cat: "People & Gestures", tags: ["dracula", "fangs"], skinTone: true },
+      { char: "🧜", name: "merperson", cat: "People & Gestures", tags: ["mermaid", "ocean"], skinTone: true },
+      { char: "🧝", name: "elf", cat: "People & Gestures", tags: ["fantasy", "ears"], skinTone: true },
+      { char: "🧟", name: "zombie", cat: "People & Gestures", tags: ["undead", "walker"] },
+      { char: "💆", name: "person getting massage", cat: "People & Gestures", tags: ["spa", "relax"], skinTone: true },
+      { char: "💇", name: "person getting haircut", cat: "People & Gestures", tags: ["salon", "barber"], skinTone: true },
+      { char: "🚶", name: "person walking", cat: "People & Gestures", tags: ["walk", "pedestrian"], skinTone: true },
+      { char: "🧍", name: "person standing", cat: "People & Gestures", tags: ["stand"], skinTone: true },
+      { char: "🧎", name: "person kneeling", cat: "People & Gestures", tags: ["kneel"], skinTone: true },
+      { char: "🏃", name: "person running", cat: "People & Gestures", tags: ["sprint", "fast", "exercise"], skinTone: true },
+      { char: "💃", name: "woman dancing", cat: "People & Gestures", tags: ["salsa", "dance"], skinTone: true },
+      { char: "🕺", name: "man dancing", cat: "People & Gestures", tags: ["disco", "groove"], skinTone: true },
+      { char: "👯", name: "people with bunny ears", cat: "People & Gestures", tags: ["party", "dancers"] },
+      { char: "🧖", name: "person in steamy room", cat: "People & Gestures", tags: ["sauna", "spa"], skinTone: true },
+      { char: "🧗", name: "person climbing", cat: "People & Gestures", tags: ["rock climb", "boulder"], skinTone: true },
+      { char: "🧘", name: "person in lotus position", cat: "People & Gestures", tags: ["yoga", "meditate", "zen"], skinTone: true },
+      { char: "🛌", name: "person in bed", cat: "People & Gestures", tags: ["sleep", "rest"] },
+      { char: "🧑‍🤝‍🧑", name: "people holding hands", cat: "People & Gestures", tags: ["friends", "couple"] },
+
+      // Animals & Nature
+      { char: "🐶", name: "dog face", cat: "Animals & Nature", tags: ["puppy", "pet", "canine"] },
+      { char: "🐱", name: "cat face", cat: "Animals & Nature", tags: ["kitten", "pet", "feline", "meow"] },
+      { char: "🐭", name: "mouse face", cat: "Animals & Nature", tags: ["rodent"] },
+      { char: "🐹", name: "hamster", cat: "Animals & Nature", tags: ["pet", "cute"] },
+      { char: "🐰", name: "rabbit face", cat: "Animals & Nature", tags: ["bunny", "easter"] },
+      { char: "🦊", name: "fox", cat: "Animals & Nature", tags: ["clever", "wild"] },
+      { char: "🐻", name: "bear", cat: "Animals & Nature", tags: ["grizzly", "teddy"] },
+      { char: "🐼", name: "panda", cat: "Animals & Nature", tags: ["bamboo", "china"] },
+      { char: "🐻‍❄️", name: "polar bear", cat: "Animals & Nature", tags: ["arctic", "ice", "white"] },
+      { char: "🐨", name: "koala", cat: "Animals & Nature", tags: ["australia"] },
+      { char: "🐯", name: "tiger face", cat: "Animals & Nature", tags: ["cat", "stripes", "wild"] },
+      { char: "🦁", name: "lion", cat: "Animals & Nature", tags: ["king", "safari", "mane"] },
+      { char: "🐮", name: "cow face", cat: "Animals & Nature", tags: ["moo", "farm", "milk"] },
+      { char: "🐷", name: "pig face", cat: "Animals & Nature", tags: ["oink", "pork"] },
+      { char: "🐸", name: "frog", cat: "Animals & Nature", tags: ["toad", "amphibian", "green"] },
+      { char: "🐵", name: "monkey face", cat: "Animals & Nature", tags: ["ape", "banana"] },
+      { char: "🙈", name: "see-no-evil monkey", cat: "Animals & Nature", tags: ["eyes", "shy"] },
+      { char: "🙉", name: "hear-no-evil monkey", cat: "Animals & Nature", tags: ["ears", "quiet"] },
+      { char: "🙊", name: "speak-no-evil monkey", cat: "Animals & Nature", tags: ["mouth", "oops"] },
+      { char: "🐒", name: "monkey", cat: "Animals & Nature", tags: ["animal"] },
+      { char: "🐔", name: "chicken", cat: "Animals & Nature", tags: ["hen", "poultry", "bird"] },
+      { char: "🐧", name: "penguin", cat: "Animals & Nature", tags: ["antarctica", "tuxedo", "bird"] },
+      { char: "🐦", name: "bird", cat: "Animals & Nature", tags: ["tweet", "nature"] },
+      { char: "🐤", name: "baby chick", cat: "Animals & Nature", tags: ["cute", "yellow"] },
+      { char: "🦆", name: "duck", cat: "Animals & Nature", tags: ["quack", "waterfowl"] },
+      { char: "🦅", name: "eagle", cat: "Animals & Nature", tags: ["raptor", "america", "freedom"] },
+      { char: "🦉", name: "owl", cat: "Animals & Nature", tags: ["wise", "night", "nocturnal"] },
+      { char: "🦇", name: "bat", cat: "Animals & Nature", tags: ["vampire", "halloween", "night"] },
+      { char: "🐺", name: "wolf", cat: "Animals & Nature", tags: ["pack", "howl", "canine"] },
+      { char: "🐗", name: "boar", cat: "Animals & Nature", tags: ["wild pig"] },
+      { char: "🐴", name: "horse face", cat: "Animals & Nature", tags: ["stallion", "equestrian"] },
+      { char: "🦄", name: "unicorn", cat: "Animals & Nature", tags: ["magic", "fantasy", "rainbow"] },
+      { char: "🐝", name: "honeybee", cat: "Animals & Nature", tags: ["bug", "buzz", "honey", "bee"] },
+      { char: "🪱", name: "worm", cat: "Animals & Nature", tags: ["dirt", "crawler"] },
+      { char: "🐛", name: "bug", cat: "Animals & Nature", tags: ["caterpillar", "insect"] },
+      { char: "🦋", name: "butterfly", cat: "Animals & Nature", tags: ["pretty", "wings"] },
+      { char: "🐌", name: "snail", cat: "Animals & Nature", tags: ["slow", "shell"] },
+      { char: "🐞", name: "lady beetle", cat: "Animals & Nature", tags: ["ladybug", "spots"] },
+      { char: "🐜", name: "ant", cat: "Animals & Nature", tags: ["insect", "colony"] },
+      { char: "🪰", name: "fly", cat: "Animals & Nature", tags: ["pest", "insect"] },
+      { char: "🪲", name: "beetle", cat: "Animals & Nature", tags: ["bug", "shell"] },
+      { char: "🦟", name: "mosquito", cat: "Animals & Nature", tags: ["bite", "pest"] },
+      { char: "🦗", name: "cricket", cat: "Animals & Nature", tags: ["chirp", "grasshopper"] },
+      { char: "🕷️", name: "spider", cat: "Animals & Nature", tags: ["web", "creepy", "arachnid"] },
+      { char: "🦂", name: "scorpion", cat: "Animals & Nature", tags: ["sting", "desert"] },
+      { char: "🐢", name: "turtle", cat: "Animals & Nature", tags: ["slow", "reptile", "shell"] },
+      { char: "🐍", name: "snake", cat: "Animals & Nature", tags: ["serpent", "reptile", "slither"] },
+      { char: "🦎", name: "lizard", cat: "Animals & Nature", tags: ["reptile", "gecko"] },
+      { char: "🦖", name: "T-Rex", cat: "Animals & Nature", tags: ["dinosaur", "jurassic", "tyrannosaurus"] },
+      { char: "🦕", name: "sauropod", cat: "Animals & Nature", tags: ["dinosaur", "brontosaurus"] },
+      { char: "🐙", name: "octopus", cat: "Animals & Nature", tags: ["tentacles", "sea", "ocean"] },
+      { char: "🦑", name: "squid", cat: "Animals & Nature", tags: ["calamari", "ocean"] },
+      { char: "🦐", name: "shrimp", cat: "Animals & Nature", tags: ["prawn", "seafood"] },
+      { char: "🦞", name: "lobster", cat: "Animals & Nature", tags: ["crustacean", "claws"] },
+      { char: "🦀", name: "crab", cat: "Animals & Nature", tags: ["beach", "crustacean"] },
+      { char: "🐡", name: "blowfish", cat: "Animals & Nature", tags: ["pufferfish", "spikes"] },
+      { char: "🐠", name: "tropical fish", cat: "Animals & Nature", tags: ["nemo", "ocean", "aquarium"] },
+      { char: "🐟", name: "fish", cat: "Animals & Nature", tags: ["swim", "sea"] },
+      { char: "🐬", name: "dolphin", cat: "Animals & Nature", tags: ["marine", "ocean", "smart"] },
+      { char: "🐳", name: "spouting whale", cat: "Animals & Nature", tags: ["ocean", "giant"] },
+      { char: "🐋", name: "whale", cat: "Animals & Nature", tags: ["sea mammal"] },
+      { char: "🦈", name: "shark", cat: "Animals & Nature", tags: ["predator", "ocean", "jaws"] },
+      { char: "🦭", name: "seal", cat: "Animals & Nature", tags: ["sea lion", "cute"] },
+      { char: "🐊", name: "crocodile", cat: "Animals & Nature", tags: ["alligator", "swamp"] },
+      { char: "🐆", name: "leopard", cat: "Animals & Nature", tags: ["spots", "fast"] },
+      { char: "🦓", name: "zebra", cat: "Animals & Nature", tags: ["stripes", "safari"] },
+      { char: "🦍", name: "gorilla", cat: "Animals & Nature", tags: ["silverback", "ape"] },
+      { char: "🦧", name: "orangutan", cat: "Animals & Nature", tags: ["ape", "jungle"] },
+      { char: "🦣", name: "mammoth", cat: "Animals & Nature", tags: ["ice age", "tusks"] },
+      { char: "🐘", name: "elephant", cat: "Animals & Nature", tags: ["trunk", "tusks", "big"] },
+      { char: "🦛", name: "hippopotamus", cat: "Animals & Nature", tags: ["hippo", "water"] },
+      { char: "🦏", name: "rhinoceros", cat: "Animals & Nature", tags: ["rhino", "horn"] },
+      { char: "🐪", name: "camel", cat: "Animals & Nature", tags: ["desert", "hump"] },
+      { char: "🐫", name: "two-hump camel", cat: "Animals & Nature", tags: ["desert", "bactrian"] },
+      { char: "🦒", name: "giraffe", cat: "Animals & Nature", tags: ["tall", "neck", "spots"] },
+      { char: "🦘", name: "kangaroo", cat: "Animals & Nature", tags: ["australia", "hop", "joey"] },
+      { char: "🦬", name: "bison", cat: "Animals & Nature", tags: ["buffalo", "wild"] },
+      { char: "🐂", name: "ox", cat: "Animals & Nature", tags: ["bull", "strong"] },
+      { char: "🐃", name: "water buffalo", cat: "Animals & Nature", tags: ["asia"] },
+      { char: "🐄", name: "cow", cat: "Animals & Nature", tags: ["farm", "dairy"] },
+      { char: "🐎", name: "horse", cat: "Animals & Nature", tags: ["racing", "gallop"] },
+      { char: "🐖", name: "pig", cat: "Animals & Nature", tags: ["farm", "hog"] },
+      { char: "🐏", name: "ram", cat: "Animals & Nature", tags: ["horns", "sheep"] },
+      { char: "🐑", name: "ewe", cat: "Animals & Nature", tags: ["sheep", "wool"] },
+      { char: "🦙", name: "llama", cat: "Animals & Nature", tags: ["alpaca", "wool"] },
+      { char: "🐐", name: "goat", cat: "Animals & Nature", tags: ["horns", "goat"] },
+      { char: "🦌", name: "deer", cat: "Animals & Nature", tags: ["antlers", "bambi"] },
+      { char: "🐕", name: "dog", cat: "Animals & Nature", tags: ["canine", "pet"] },
+      { char: "🐩", name: "poodle", cat: "Animals & Nature", tags: ["dog", "fancy"] },
+      { char: "🦮", name: "guide dog", cat: "Animals & Nature", tags: ["service", "blind"] },
+      { char: "🐕‍🦺", name: "service dog", cat: "Animals & Nature", tags: ["vest", "helper"] },
+      { char: "🐈", name: "cat", cat: "Animals & Nature", tags: ["pet", "feline"] },
+      { char: "🐈‍⬛", name: "black cat", cat: "Animals & Nature", tags: ["luck", "halloween"] },
+      { char: "🪶", name: "feather", cat: "Animals & Nature", tags: ["light", "bird"] },
+      { char: "🐓", name: "rooster", cat: "Animals & Nature", tags: ["cock-a-doodle-doo", "morning"] },
+      { char: "🦃", name: "turkey", cat: "Animals & Nature", tags: ["thanksgiving", "gobble"] },
+      { char: "🦤", name: "dodo", cat: "Animals & Nature", tags: ["extinct", "bird"] },
+      { char: "🦚", name: "peacock", cat: "Animals & Nature", tags: ["feathers", "colorful"] },
+      { char: "🦜", name: "parrot", cat: "Animals & Nature", tags: ["pirate", "talk", "tropical"] },
+      { char: "🦢", name: "swan", cat: "Animals & Nature", tags: ["graceful", "lake"] },
+      { char: "🦩", name: "flamingo", cat: "Animals & Nature", tags: ["pink", "tropical"] },
+      { char: "🕊️", name: "dove", cat: "Animals & Nature", tags: ["peace", "bird"] },
+      { char: "🐇", name: "rabbit", cat: "Animals & Nature", tags: ["bunny", "fast"] },
+      { char: "🦝", name: "raccoon", cat: "Animals & Nature", tags: ["trash panda", "bandit"] },
+      { char: "🦨", name: "skunk", cat: "Animals & Nature", tags: ["stinky", "smell"] },
+      { char: "🦡", name: "badger", cat: "Animals & Nature", tags: ["honey badger"] },
+      { char: "🦫", name: "beaver", cat: "Animals & Nature", tags: ["dam", "wood"] },
+      { char: "🦦", name: "otter", cat: "Animals & Nature", tags: ["cute", "water", "playful"] },
+      { char: "🦥", name: "sloth", cat: "Animals & Nature", tags: ["lazy", "slow", "tree"] },
+      { char: "🐁", name: "mouse", cat: "Animals & Nature", tags: ["small", "cheese"] },
+      { char: "🐀", name: "rat", cat: "Animals & Nature", tags: ["rodent", "subway"] },
+      { char: "🐿️", name: "chipmunk", cat: "Animals & Nature", tags: ["squirrel", "nuts"] },
+      { char: "🦔", name: "hedgehog", cat: "Animals & Nature", tags: ["sonic", "spikes", "cute"] },
+      { char: "🌸", name: "cherry blossom", cat: "Animals & Nature", tags: ["sakura", "flower", "spring"] },
+      { char: "💮", name: "white flower", cat: "Animals & Nature", tags: ["bloom", "japanese"] },
+      { char: "🪷", name: "lotus", cat: "Animals & Nature", tags: ["buddhism", "calm", "water lily"] },
+      { char: "🏵️", name: "rosette", cat: "Animals & Nature", tags: ["decoration", "badge"] },
+      { char: "🌹", name: "rose", cat: "Animals & Nature", tags: ["red", "romance", "love", "flower"] },
+      { char: "🌺", name: "hibiscus", cat: "Animals & Nature", tags: ["tropical", "hawaii", "flower"] },
+      { char: "🌻", name: "sunflower", cat: "Animals & Nature", tags: ["yellow", "summer", "sun"] },
+      { char: "🌼", name: "blossom", cat: "Animals & Nature", tags: ["flower", "yellow"] },
+      { char: "🌷", name: "tulip", cat: "Animals & Nature", tags: ["flower", "holland", "spring"] },
+      { char: "🌱", name: "seedling", cat: "Animals & Nature", tags: ["sprout", "grow", "plant"] },
+      { char: "🪴", name: "potted plant", cat: "Animals & Nature", tags: ["houseplant", "gardening"] },
+      { char: "🌲", name: "evergreen tree", cat: "Animals & Nature", tags: ["pine", "nature", "forest"] },
+      { char: "🌳", name: "deciduous tree", cat: "Animals & Nature", tags: ["nature", "leaves", "wood"] },
+      { char: "🌴", name: "palm tree", cat: "Animals & Nature", tags: ["tropical", "beach", "summer"] },
+      { char: "🌵", name: "cactus", cat: "Animals & Nature", tags: ["desert", "spikes"] },
+      { char: "🌾", name: "sheaf of rice", cat: "Animals & Nature", tags: ["grain", "wheat", "crop"] },
+      { char: "🌿", name: "herb", cat: "Animals & Nature", tags: ["leaves", "medicinal", "green"] },
+      { char: "☘️", name: "shamrock", cat: "Animals & Nature", tags: ["ireland", "st patrick"] },
+      { char: "🍀", name: "four leaf clover", cat: "Animals & Nature", tags: ["lucky", "irish"] },
+      { char: "🍁", name: "maple leaf", cat: "Animals & Nature", tags: ["canada", "autumn", "fall"] },
+      { char: "🍂", name: "fallen leaf", cat: "Animals & Nature", tags: ["autumn", "fall", "season"] },
+      { char: "🍃", name: "leaf fluttering in wind", cat: "Animals & Nature", tags: ["wind", "breeze", "nature"] },
+      { char: "🍄", name: "mushroom", cat: "Animals & Nature", tags: ["toadstool", "fungus", "mario"] },
+
+      // Food & Drink
+      { char: "🍇", name: "grapes", cat: "Food & Drink", tags: ["fruit", "wine", "purple"] },
+      { char: "🍈", name: "melon", cat: "Food & Drink", tags: ["cantaloupe", "fruit"] },
+      { char: "🍉", name: "watermelon", cat: "Food & Drink", tags: ["summer", "fruit", "slice"] },
+      { char: "🍊", name: "tangerine", cat: "Food & Drink", tags: ["orange", "citrus", "fruit"] },
+      { char: "🍋", name: "lemon", cat: "Food & Drink", tags: ["sour", "citrus", "yellow"] },
+      { char: "🍌", name: "banana", cat: "Food & Drink", tags: ["potassium", "fruit", "yellow"] },
+      { char: "🍍", name: "pineapple", cat: "Food & Drink", tags: ["tropical", "fruit", "sweet"] },
+      { char: "🥭", name: "mango", cat: "Food & Drink", tags: ["sweet", "tropical", "fruit"] },
+      { char: "🍎", name: "red apple", cat: "Food & Drink", tags: ["fruit", "healthy"] },
+      { char: "🍏", name: "green apple", cat: "Food & Drink", tags: ["fruit", "sour"] },
+      { char: "🍐", name: "pear", cat: "Food & Drink", tags: ["fruit"] },
+      { char: "🍑", name: "peach", cat: "Food & Drink", tags: ["fruit", "butt", "sweet"] },
+      { char: "🍒", name: "cherries", cat: "Food & Drink", tags: ["fruit", "red", "sweet"] },
+      { char: "🍓", name: "strawberry", cat: "Food & Drink", tags: ["berry", "red", "sweet"] },
+      { char: "🫐", name: "blueberries", cat: "Food & Drink", tags: ["berry", "blue", "fruit"] },
+      { char: "🥝", name: "kiwi fruit", cat: "Food & Drink", tags: ["fruit", "green"] },
+      { char: "🍅", name: "tomato", cat: "Food & Drink", tags: ["vegetable", "red", "salad"] },
+      { char: "🫒", name: "olive", cat: "Food & Drink", tags: ["oil", "greece", "martini"] },
+      { char: "🥥", name: "coconut", cat: "Food & Drink", tags: ["tropical", "palm"] },
+      { char: "🥑", name: "avocado", cat: "Food & Drink", tags: ["guacamole", "healthy", "toast"] },
+      { char: "🍆", name: "eggplant", cat: "Food & Drink", tags: ["aubergine", "vegetable"] },
+      { char: "🥔", name: "potato", cat: "Food & Drink", tags: ["fries", "spud", "vegetable"] },
+      { char: "🥕", name: "carrot", cat: "Food & Drink", tags: ["orange", "rabbit", "vegetable"] },
+      { char: "🌽", name: "ear of corn", cat: "Food & Drink", tags: ["maize", "popcorn"] },
+      { char: "🌶️", name: "hot pepper", cat: "Food & Drink", tags: ["spicy", "chili", "hot"] },
+      { char: "🫑", name: "bell pepper", cat: "Food & Drink", tags: ["paprika", "salad"] },
+      { char: "🥒", name: "cucumber", cat: "Food & Drink", tags: ["pickle", "salad"] },
+      { char: "🥬", name: "leafy green", cat: "Food & Drink", tags: ["kale", "lettuce", "salad"] },
+      { char: "🥦", name: "broccoli", cat: "Food & Drink", tags: ["vegetable", "green", "healthy"] },
+      { char: "🧄", name: "garlic", cat: "Food & Drink", tags: ["cooking", "vampire", "spice"] },
+      { char: "🧅", name: "onion", cat: "Food & Drink", tags: ["cooking", "tears"] },
+      { char: "🥜", name: "peanuts", cat: "Food & Drink", tags: ["nuts", "snack"] },
+      { char: "🫘", name: "beans", cat: "Food & Drink", tags: ["legume", "chili"] },
+      { char: "🌰", name: "chestnut", cat: "Food & Drink", tags: ["autumn", "nut"] },
+      { char: "🍞", name: "bread", cat: "Food & Drink", tags: ["toast", "bakery", "loaf"] },
+      { char: "🥐", name: "croissant", cat: "Food & Drink", tags: ["french", "pastry", "breakfast"] },
+      { char: "🥖", name: "baguette bread", cat: "Food & Drink", tags: ["french", "bread"] },
+      { char: "🫓", name: "flatbread", cat: "Food & Drink", tags: ["naan", "pita", "roti"] },
+      { char: "🥨", name: "pretzel", cat: "Food & Drink", tags: ["salty", "snack", "bavarian"] },
+      { char: "🥯", name: "bagel", cat: "Food & Drink", tags: ["breakfast", "cream cheese"] },
+      { char: "🥞", name: "pancakes", cat: "Food & Drink", tags: ["breakfast", "syrup", "crepe"] },
+      { char: "🧇", name: "waffle", cat: "Food & Drink", tags: ["belgian", "breakfast"] },
+      { char: "🧀", name: "cheese wedge", cat: "Food & Drink", tags: ["cheddar", "dairy", "swiss"] },
+      { char: "🍖", name: "meat on bone", cat: "Food & Drink", tags: ["manga", "bbq", "steak"] },
+      { char: "🍗", name: "poultry leg", cat: "Food & Drink", tags: ["chicken", "drumstick", "kfc"] },
+      { char: "🥩", name: "cut of meat", cat: "Food & Drink", tags: ["steak", "beef", "raw"] },
+      { char: "🥓", name: "bacon", cat: "Food & Drink", tags: ["pork", "breakfast", "crispy"] },
+      { char: "🍔", name: "hamburger", cat: "Food & Drink", tags: ["burger", "fast food", "beef"] },
+      { char: "🍟", name: "french fries", cat: "Food & Drink", tags: ["chips", "potato", "fast food"] },
+      { char: "🍕", name: "pizza", cat: "Food & Drink", tags: ["slice", "italian", "cheese", "pepperoni"] },
+      { char: "🌭", name: "hot dog", cat: "Food & Drink", tags: ["frankfurter", "sausage", "mustard"] },
+      { char: "🥪", name: "sandwich", cat: "Food & Drink", tags: ["lunch", "bread", "sub"] },
+      { char: "🌮", name: "taco", cat: "Food & Drink", tags: ["mexican", "tortilla"] },
+      { char: "🌯", name: "burrito", cat: "Food & Drink", tags: ["wrap", "mexican"] },
+      { char: "🫔", name: "tamale", cat: "Food & Drink", tags: ["mexican", "corn"] },
+      { char: "🥙", name: "stuffed flatbread", cat: "Food & Drink", tags: ["kebab", "gyros", "falafel"] },
+      { char: "🧆", name: "falafel", cat: "Food & Drink", tags: ["middle eastern", "chickpea"] },
+      { char: "🥚", name: "egg", cat: "Food & Drink", tags: ["breakfast", "shell"] },
+      { char: "🍳", name: "cooking", cat: "Food & Drink", tags: ["fried egg", "pan", "breakfast"] },
+      { char: "🥘", name: "shallow pan of food", cat: "Food & Drink", tags: ["paella", "casserole"] },
+      { char: "🍲", name: "pot of food", cat: "Food & Drink", tags: ["stew", "soup", "hotpot"] },
+      { char: "🫕", name: "fondue", cat: "Food & Drink", tags: ["melted", "cheese", "chocolate"] },
+      { char: "🥣", name: "bowl with spoon", cat: "Food & Drink", tags: ["cereal", "soup", "oatmeal"] },
+      { char: "🥗", name: "green salad", cat: "Food & Drink", tags: ["healthy", "vegetables", "diet"] },
+      { char: "🍿", name: "popcorn", cat: "Food & Drink", tags: ["movie", "snack", "cinema"] },
+      { char: "🧈", name: "butter", cat: "Food & Drink", tags: ["dairy", "spread"] },
+      { char: "🧂", name: "salt", cat: "Food & Drink", tags: ["shaker", "seasoning"] },
+      { char: "🥫", name: "canned food", cat: "Food & Drink", tags: ["can", "soup", "tin"] },
+      { char: "🍱", name: "bento box", cat: "Food & Drink", tags: ["japanese", "lunch"] },
+      { char: "🍘", name: "rice cracker", cat: "Food & Drink", tags: ["senbei", "japanese"] },
+      { char: "🍙", name: "rice ball", cat: "Food & Drink", tags: ["onigiri", "japanese"] },
+      { char: "🍚", name: "cooked rice", cat: "Food & Drink", tags: ["bowl", "steamed", "asian"] },
+      { char: "🍛", name: "curry rice", cat: "Food & Drink", tags: ["spicy", "indian", "japanese"] },
+      { char: "🍜", name: "steaming bowl", cat: "Food & Drink", tags: ["ramen", "noodles", "soup", "pho"] },
+      { char: "🍝", name: "spaghetti", cat: "Food & Drink", tags: ["pasta", "italian", "noodles"] },
+      { char: "🍠", name: "roasted sweet potato", cat: "Food & Drink", tags: ["yam"] },
+      { char: "🍢", name: "oden", cat: "Food & Drink", tags: ["skewer", "seafood"] },
+      { char: "🍣", name: "sushi", cat: "Food & Drink", tags: ["salmon", "nigiri", "japanese"] },
+      { char: "🍤", name: "fried shrimp", cat: "Food & Drink", tags: ["tempura", "seafood"] },
+      { char: "🍥", name: "fish cake with swirl", cat: "Food & Drink", tags: ["narutomaki", "ramen"] },
+      { char: "🥮", name: "moon cake", cat: "Food & Drink", tags: ["mid-autumn", "chinese"] },
+      { char: "🍡", name: "dango", cat: "Food & Drink", tags: ["sweet", "japanese", "dessert"] },
+      { char: "🥟", name: "dumpling", cat: "Food & Drink", tags: ["gyoza", "dim sum", "potsticker"] },
+      { char: "🥠", name: "fortune cookie", cat: "Food & Drink", tags: ["prophecy", "chinese food"] },
+      { char: "🥡", name: "takeout box", cat: "Food & Drink", tags: ["noodles", "chinese"] },
+      { char: "🍦", name: "soft ice cream", cat: "Food & Drink", tags: ["cone", "dessert", "sweet"] },
+      { char: "🍧", name: "shaved ice", cat: "Food & Drink", tags: ["kakigori", "syrup"] },
+      { char: "🍨", name: "ice cream", cat: "Food & Drink", tags: ["bowl", "dessert", "gelato"] },
+      { char: "🍩", name: "doughnut", cat: "Food & Drink", tags: ["donut", "sweet", "frosting"] },
+      { char: "🍪", name: "cookie", cat: "Food & Drink", tags: ["chocolate chip", "biscuit", "sweet"] },
+      { char: "🎂", name: "birthday cake", cat: "Food & Drink", tags: ["celebrate", "candles", "party"] },
+      { char: "🍰", name: "shortcake", cat: "Food & Drink", tags: ["slice", "dessert", "strawberry"] },
+      { char: "🧁", name: "cupcake", cat: "Food & Drink", tags: ["bakery", "muffin", "frosting"] },
+      { char: "🥧", name: "pie", cat: "Food & Drink", tags: ["apple pie", "bakery"] },
+      { char: "🍫", name: "chocolate bar", cat: "Food & Drink", tags: ["candy", "sweet", "cocoa"] },
+      { char: "🍬", name: "candy", cat: "Food & Drink", tags: ["sweet", "wrapper"] },
+      { char: "🍭", name: "lollipop", cat: "Food & Drink", tags: ["candy", "sugar", "stick"] },
+      { char: "🍮", name: "custard", cat: "Food & Drink", tags: ["pudding", "caramel", "flan"] },
+      { char: "🍯", name: "honey pot", cat: "Food & Drink", tags: ["bee", "sweet"] },
+      { char: "🍼", name: "baby bottle", cat: "Food & Drink", tags: ["milk", "infant"] },
+      { char: "🥛", name: "glass of milk", cat: "Food & Drink", tags: ["dairy", "drink"] },
+      { char: "☕", name: "hot beverage", cat: "Food & Drink", tags: ["coffee", "tea", "espresso", "latte"] },
+      { char: "🫖", name: "teapot", cat: "Food & Drink", tags: ["tea", "kettle"] },
+      { char: "🍵", name: "teacup without handle", cat: "Food & Drink", tags: ["matcha", "green tea"] },
+      { char: "🍶", name: "sake", cat: "Food & Drink", tags: ["japanese", "alcohol", "bottle"] },
+      { char: "🍾", name: "bottle with popping cork", cat: "Food & Drink", tags: ["champagne", "celebrate", "toast"] },
+      { char: "🍷", name: "wine glass", cat: "Food & Drink", tags: ["red wine", "alcohol", "drink"] },
+      { char: "🍸", name: "cocktail glass", cat: "Food & Drink", tags: ["martini", "alcohol", "bar"] },
+      { char: "🍹", name: "tropical drink", cat: "Food & Drink", tags: ["cocktail", "vacation", "tiki"] },
+      { char: "🍺", name: "beer mug", cat: "Food & Drink", tags: ["brew", "alcohol", "pub", "pint"] },
+      { char: "🍻", name: "clinking beer mugs", cat: "Food & Drink", tags: ["cheers", "toast", "party"] },
+      { char: "🥂", name: "clinking glasses", cat: "Food & Drink", tags: ["champagne", "celebrate", "prosecco"] },
+      { char: "🥃", name: "tumbler glass", cat: "Food & Drink", tags: ["whiskey", "bourbon", "scotch", "liquor"] },
+      { char: "🫗", name: "pouring liquid", cat: "Food & Drink", tags: ["spill", "water", "pour"] },
+      { char: "🥤", name: "cup with straw", cat: "Food & Drink", tags: ["soda", "juice", "drink"] },
+      { char: "🧋", name: "bubble tea", cat: "Food & Drink", tags: ["boba", "milk tea"] },
+      { char: "🧃", name: "beverage box", cat: "Food & Drink", tags: ["juice box", "straw"] },
+      { char: "🧉", name: "mate", cat: "Food & Drink", tags: ["tea", "yerba mate"] },
+      { char: "🧊", name: "ice", cat: "Food & Drink", tags: ["cold", "cube", "freezing"] },
+
+      // Activities & Sports
+      { char: "⚽", name: "soccer ball", cat: "Activities", tags: ["football", "fifa", "sport"] },
+      { char: "🏀", name: "basketball", cat: "Activities", tags: ["nba", "dunk", "sport", "hoop"] },
+      { char: "🏈", name: "american football", cat: "Activities", tags: ["nfl", "super bowl", "touchdown"] },
+      { char: "⚾", name: "baseball", cat: "Activities", tags: ["mlb", "ball", "strike"] },
+      { char: "🥎", name: "softball", cat: "Activities", tags: ["ball", "sport"] },
+      { char: "🎾", name: "tennis", cat: "Activities", tags: ["racket", "court", "sport"] },
+      { char: "🏐", name: "volleyball", cat: "Activities", tags: ["beach", "serve", "sport"] },
+      { char: "🏉", name: "rugby football", cat: "Activities", tags: ["scrum", "sport"] },
+      { char: "🥏", name: "flying disc", cat: "Activities", tags: ["frisbee", "ultimate"] },
+      { char: "🎱", name: "pool 8 ball", cat: "Activities", tags: ["billiards", "snooker"] },
+      { char: "🪀", name: "yo-yo", cat: "Activities", tags: ["toy", "trick"] },
+      { char: "🏓", name: "ping pong", cat: "Activities", tags: ["table tennis", "paddle"] },
+      { char: "🏸", name: "badminton", cat: "Activities", tags: ["shuttlecock", "racket"] },
+      { char: "🏒", name: "ice hockey", cat: "Activities", tags: ["nhl", "puck"] },
+      { char: "🏑", name: "field hockey", cat: "Activities", tags: ["stick", "turf"] },
+      { char: "🥍", name: "lacrosse", cat: "Activities", tags: ["net", "stick"] },
+      { char: "🏏", name: "cricket game", cat: "Activities", tags: ["wicket", "bat"] },
+      { char: "🪃", name: "boomerang", cat: "Activities", tags: ["australia", "return"] },
+      { char: "🥅", name: "goal net", cat: "Activities", tags: ["score", "soccer", "hockey"] },
+      { char: "⛳", name: "flag in hole", cat: "Activities", tags: ["golf", "putt", "green"] },
+      { char: "🪁", name: "kite", cat: "Activities", tags: ["fly", "wind", "sky"] },
+      { char: "🏹", name: "bow and arrow", cat: "Activities", tags: ["archery", "target", "bullseye"] },
+      { char: "🎣", name: "fishing pole", cat: "Activities", tags: ["fish", "catch", "hook"] },
+      { char: "🤿", name: "diving mask", cat: "Activities", tags: ["snorkel", "scuba", "underwater"] },
+      { char: "🥊", name: "boxing glove", cat: "Activities", tags: ["punch", "fight", "mma"] },
+      { char: "🥋", name: "martial arts uniform", cat: "Activities", tags: ["karate", "judo", "taekwondo"] },
+      { char: "🛹", name: "skateboard", cat: "Activities", tags: ["skate", "board", "ollie"] },
+      { char: "🛼", name: "roller skate", cat: "Activities", tags: ["derby", "wheels"] },
+      { char: "🛷", name: "sled", cat: "Activities", tags: ["snow", "sleigh"] },
+      { char: "⛸️", name: "ice skate", cat: "Activities", tags: ["rink", "figure skating"] },
+      { char: "🥌", name: "curling stone", cat: "Activities", tags: ["winter olympics", "sweep"] },
+      { char: "🎿", name: "skis", cat: "Activities", tags: ["skiing", "snow", "slopes"] },
+      { char: "⛷️", name: "skier", cat: "Activities", tags: ["winter", "alpine"] },
+      { char: "🏂", name: "snowboarder", cat: "Activities", tags: ["snowboard", "halfpipe"] },
+      { char: "🏋️", name: "person lifting weights", cat: "Activities", tags: ["gym", "workout", "barbell"], skinTone: true },
+      { char: "🤺", name: "person fencing", cat: "Activities", tags: ["sword", "duel"] },
+      { char: "🏇", name: "horse racing", cat: "Activities", tags: ["jockey", "derby"], skinTone: true },
+      { char: "🏄", name: "person surfing", cat: "Activities", tags: ["wave", "ocean", "surfboard"], skinTone: true },
+      { char: "🏊", name: "person swimming", cat: "Activities", tags: ["pool", "water"], skinTone: true },
+      { char: "🚴", name: "person biking", cat: "Activities", tags: ["bicycle", "cyclist"], skinTone: true },
+      { char: "🏆", name: "trophy", cat: "Activities", tags: ["winner", "first", "champion", "award"] },
+      { char: "🥇", name: "1st place medal", cat: "Activities", tags: ["gold", "first", "champion"] },
+      { char: "🥈", name: "2nd place medal", cat: "Activities", tags: ["silver", "second"] },
+      { char: "🥉", name: "3rd place medal", cat: "Activities", tags: ["bronze", "third"] },
+      { char: "🏅", name: "sports medal", cat: "Activities", tags: ["prize", "olympics"] },
+      { char: "🎖️", name: "military medal", cat: "Activities", tags: ["honor", "ribbon"] },
+      { char: "🎫", name: "ticket", cat: "Activities", tags: ["cinema", "concert", "pass"] },
+      { char: "🎟️", name: "admission tickets", cat: "Activities", tags: ["raffle", "entry"] },
+      { char: "🎪", name: "circus tent", cat: "Activities", tags: ["carnival", "big top"] },
+      { char: "🎭", name: "performing arts", cat: "Activities", tags: ["theater", "drama", "masks"] },
+      { char: "🎨", name: "artist palette", cat: "Activities", tags: ["paint", "art", "draw", "creativity"] },
+      { char: "🎬", name: "clapper board", cat: "Activities", tags: ["movie", "film", "cinema", "director"] },
+      { char: "🎤", name: "microphone", cat: "Activities", tags: ["sing", "karaoke", "mic", "podcast"] },
+      { char: "🎧", name: "headphone", cat: "Activities", tags: ["music", "audio", "listen"] },
+      { char: "🎼", name: "musical score", cat: "Activities", tags: ["sheet music", "clef"] },
+      { char: "🎹", name: "musical keyboard", cat: "Activities", tags: ["piano", "keys"] },
+      { char: "🥁", name: "drum", cat: "Activities", tags: ["percussion", "beat"] },
+      { char: "🎷", name: "saxophone", cat: "Activities", tags: ["jazz", "brass"] },
+      { char: "🎺", name: "trumpet", cat: "Activities", tags: ["brass", "horn"] },
+      { char: "🎸", name: "guitar", cat: "Activities", tags: ["rock", "acoustic", "strings"] },
+      { char: "🪕", name: "banjo", cat: "Activities", tags: ["country", "folk"] },
+      { char: "🎻", name: "violin", cat: "Activities", tags: ["classical", "strings"] },
+      { char: "🎲", name: "game die", cat: "Activities", tags: ["dice", "board game", "random", "luck"] },
+      { char: "♟️", name: "chess pawn", cat: "Activities", tags: ["game", "strategy", "checkmate"] },
+      { char: "🎯", name: "bullseye", cat: "Activities", tags: ["darts", "target", "accuracy", "hit"] },
+      { char: "🎳", name: "bowling", cat: "Activities", tags: ["strike", "pins"] },
+      { char: "🎮", name: "video game", cat: "Activities", tags: ["controller", "gaming", "playstation", "xbox"] },
+      { char: "🕹️", name: "joystick", cat: "Activities", tags: ["arcade", "retro"] },
+      { char: "🎰", name: "slot machine", cat: "Activities", tags: ["casino", "gamble", "jackpot"] },
+
+      // Travel & Places
+      { char: "🚗", name: "automobile", cat: "Travel & Places", tags: ["car", "drive", "vehicle"] },
+      { char: "🚕", name: "taxi", cat: "Travel & Places", tags: ["cab", "yellow"] },
+      { char: "🚙", name: "sport utility vehicle", cat: "Travel & Places", tags: ["suv", "car"] },
+      { char: "🚌", name: "bus", cat: "Travel & Places", tags: ["transit", "school bus"] },
+      { char: "🚎", name: "trolleybus", cat: "Travel & Places", tags: ["transit"] },
+      { char: "🏎️", name: "racing car", cat: "Travel & Places", tags: ["f1", "formula 1", "speed"] },
+      { char: "🚓", name: "police car", cat: "Travel & Places", tags: ["cops", "emergency"] },
+      { char: "🚑", name: "ambulance", cat: "Travel & Places", tags: ["medical", "hospital", "emergency"] },
+      { char: "🚒", name: "fire engine", cat: "Travel & Places", tags: ["fire truck", "emergency"] },
+      { char: "🚐", name: "minibus", cat: "Travel & Places", tags: ["van"] },
+      { char: "🛻", name: "pickup truck", cat: "Travel & Places", tags: ["truck", "ford"] },
+      { char: "🚚", name: "delivery truck", cat: "Travel & Places", tags: ["shipping", "amazon", "fedex"] },
+      { char: "🚛", name: "articulated lorry", cat: "Travel & Places", tags: ["semi", "big rig"] },
+      { char: "🚜", name: "tractor", cat: "Travel & Places", tags: ["farm", "agriculture"] },
+      { char: "🛵", name: "motor scooter", cat: "Travel & Places", tags: ["vespa", "moped"] },
+      { char: "🏍️", name: "motorcycle", cat: "Travel & Places", tags: ["bike", "harley"] },
+      { char: "🛺", name: "auto rickshaw", cat: "Travel & Places", tags: ["tuk tuk"] },
+      { char: "🚲", name: "bicycle", cat: "Travel & Places", tags: ["bike", "pedal", "cycle"] },
+      { char: "🛴", name: "kick scooter", cat: "Travel & Places", tags: ["scooter"] },
+      { char: "🚨", name: "police car light", cat: "Travel & Places", tags: ["siren", "emergency", "alert", "danger"] },
+      { char: "✈️", name: "airplane", cat: "Travel & Places", tags: ["flight", "travel", "fly", "trip"] },
+      { char: "🛫", name: "airplane departure", cat: "Travel & Places", tags: ["takeoff", "flight"] },
+      { char: "🛬", name: "airplane arrival", cat: "Travel & Places", tags: ["landing", "arrival"] },
+      { char: "🛩️", name: "small airplane", cat: "Travel & Places", tags: ["propeller", "cessna"] },
+      { char: "🚀", name: "rocket", cat: "Travel & Places", tags: ["space", "launch", "moon", "fast", "ship"] },
+      { char: "🛸", name: "flying saucer", cat: "Travel & Places", tags: ["ufo", "alien"] },
+      { char: "🚁", name: "helicopter", cat: "Travel & Places", tags: ["chopper", "flight"] },
+      { char: "⛵", name: "sailboat", cat: "Travel & Places", tags: ["boat", "yacht", "sea"] },
+      { char: "🚤", name: "speedboat", cat: "Travel & Places", tags: ["fast", "water"] },
+      { char: "🚢", name: "ship", cat: "Travel & Places", tags: ["cruise", "ocean liner", "boat"] },
+      { char: "🚂", name: "locomotive", cat: "Travel & Places", tags: ["train", "steam", "railway"] },
+      { char: "🚆", name: "train", cat: "Travel & Places", tags: ["transit", "rail"] },
+      { char: "🚇", name: "metro", cat: "Travel & Places", tags: ["subway", "underground"] },
+      { char: "🚊", name: "tram", cat: "Travel & Places", tags: ["streetcar", "transit"] },
+      { char: "🗺️", name: "world map", cat: "Travel & Places", tags: ["geography", "travel", "navigate"] },
+      { char: "🧭", name: "compass", cat: "Travel & Places", tags: ["navigation", "direction", "orientation"] },
+      { char: "🏔️", name: "snow-capped mountain", cat: "Travel & Places", tags: ["peak", "everest", "cold"] },
+      { char: "⛰️", name: "mountain", cat: "Travel & Places", tags: ["nature", "hiking"] },
+      { char: "🌋", name: "volcano", cat: "Travel & Places", tags: ["lava", "eruption"] },
+      { char: "🏕️", name: "camping", cat: "Travel & Places", tags: ["tent", "outdoor"] },
+      { char: "🏖️", name: "beach with umbrella", cat: "Travel & Places", tags: ["vacation", "summer", "ocean"] },
+      { char: "🏜️", name: "desert", cat: "Travel & Places", tags: ["sand", "dunes", "dry"] },
+      { char: "🏝️", name: "desert island", cat: "Travel & Places", tags: ["tropical", "paradise"] },
+      { char: "🏟️", name: "stadium", cat: "Travel & Places", tags: ["arena", "sports", "concert"] },
+      { char: "🏛️", name: "classical building", cat: "Travel & Places", tags: ["museum", "bank", "greek"] },
+      { char: "🏗️", name: "building construction", cat: "Travel & Places", tags: ["crane", "work"] },
+      { char: "🧱", name: "brick", cat: "Travel & Places", tags: ["wall", "build"] },
+      { char: "🏘️", name: "houses", cat: "Travel & Places", tags: ["neighborhood", "suburb"] },
+      { char: "🏚️", name: "derelict house", cat: "Travel & Places", tags: ["haunted", "abandoned"] },
+      { char: "🏠", name: "house", cat: "Travel & Places", tags: ["home", "building", "residence"] },
+      { char: "🏡", name: "house with garden", cat: "Travel & Places", tags: ["home", "cottage"] },
+      { char: "🏢", name: "office building", cat: "Travel & Places", tags: ["work", "corporate", "city"] },
+      { char: "🏣", name: "japanese post office", cat: "Travel & Places", tags: ["mail", "postal"] },
+      { char: "🏤", name: "post office", cat: "Travel & Places", tags: ["mail"] },
+      { char: "🏥", name: "hospital", cat: "Travel & Places", tags: ["doctor", "health", "emergency"] },
+      { char: "🏦", name: "bank", cat: "Travel & Places", tags: ["money", "finance"] },
+      { char: "🏨", name: "hotel", cat: "Travel & Places", tags: ["stay", "room", "vacation"] },
+      { char: "🏩", name: "love hotel", cat: "Travel & Places", tags: ["romance", "motel"] },
+      { char: "🏪", name: "convenience store", cat: "Travel & Places", tags: ["711", "shop", "night"] },
+      { char: "🏫", name: "school", cat: "Travel & Places", tags: ["education", "learn", "class"] },
+      { char: "🏬", name: "department store", cat: "Travel & Places", tags: ["mall", "shopping"] },
+      { char: "🏭", name: "factory", cat: "Travel & Places", tags: ["industry", "manufacturing"] },
+      { char: "🏰", name: "castle", cat: "Travel & Places", tags: ["fairytale", "medieval", "fortress"] },
+      { char: "🗼", name: "Tokyo tower", cat: "Travel & Places", tags: ["japan", "landmark"] },
+      { char: "🗽", name: "Statue of Liberty", cat: "Travel & Places", tags: ["new york", "usa", "freedom"] },
+      { char: "🌉", name: "bridge at night", cat: "Travel & Places", tags: ["golden gate", "san francisco"] },
+      { char: "⛲", name: "fountain", cat: "Travel & Places", tags: ["water", "park"] },
+      { char: "⛺", name: "tent", cat: "Travel & Places", tags: ["camping", "outdoor"] },
+
+      // Objects
+      { char: "💻", name: "laptop", cat: "Objects", tags: ["computer", "pc", "macbook", "tech", "work"] },
+      { char: "🖥️", name: "desktop computer", cat: "Objects", tags: ["pc", "monitor", "screen"] },
+      { char: "⌨️", name: "keyboard", cat: "Objects", tags: ["typing", "input", "tech"] },
+      { char: "🖱️", name: "computer mouse", cat: "Objects", tags: ["click", "hardware"] },
+      { char: "📱", name: "mobile phone", cat: "Objects", tags: ["iphone", "smartphone", "cellular"] },
+      { char: "☎️", name: "telephone", cat: "Objects", tags: ["call", "retro"] },
+      { char: "🔋", name: "battery", cat: "Objects", tags: ["power", "energy", "charge"] },
+      { char: "🔌", name: "electric plug", cat: "Objects", tags: ["socket", "power", "cord"] },
+      { char: "💡", name: "light bulb", cat: "Objects", tags: ["idea", "bright", "innovation", "electricity"] },
+      { char: "🔦", name: "flashlight", cat: "Objects", tags: ["torch", "dark"] },
+      { char: "🕯️", name: "candle", cat: "Objects", tags: ["wax", "flame", "light"] },
+      { char: "💣", name: "bomb", cat: "Objects", tags: ["explosion", "boom", "danger"] },
+      { char: "🧨", name: "firecracker", cat: "Objects", tags: ["dynamite", "new year"] },
+      { char: "🔪", name: "kitchen knife", cat: "Objects", tags: ["blade", "cook", "cut"] },
+      { char: "🗡️", name: "dagger", cat: "Objects", tags: ["sword", "weapon"] },
+      { char: "⚔️", name: "crossed swords", cat: "Objects", tags: ["battle", "fight", "rpg"] },
+      { char: "🛡️", name: "shield", cat: "Objects", tags: ["defense", "protect", "armor"] },
+      { char: "🚬", name: "cigarette", cat: "Objects", tags: ["smoke", "tobacco"] },
+      { char: "⚰️", name: "coffin", cat: "Objects", tags: ["funeral", "death", "grave"] },
+      { char: "🪦", name: "headstone", cat: "Objects", tags: ["rip", "cemetery", "grave"] },
+      { char: "🔮", name: "crystal ball", cat: "Objects", tags: ["fortune", "future", "magic"] },
+      { char: "📿", name: "prayer beads", cat: "Objects", tags: ["rosary", "religion"] },
+      { char: "🧿", name: "nazar amulet", cat: "Objects", tags: ["evil eye", "protection", "blue"] },
+      { char: "💈", name: "barber pole", cat: "Objects", tags: ["haircut", "salon"] },
+      { char: "🧲", name: "magnet", cat: "Objects", tags: ["attract", "physics"] },
+      { char: "⚗️", name: "alembic", cat: "Objects", tags: ["chemistry", "lab", "potion"] },
+      { char: "🧪", name: "test tube", cat: "Objects", tags: ["science", "chemistry", "lab"] },
+      { char: "🧫", name: "petri dish", cat: "Objects", tags: ["bacteria", "biology"] },
+      { char: "🧬", name: "dna", cat: "Objects", tags: ["genetics", "biology", "science"] },
+      { char: "🔬", name: "microscope", cat: "Objects", tags: ["science", "zoom", "research"] },
+      { char: "🔭", name: "telescope", cat: "Objects", tags: ["astronomy", "stars", "space"] },
+      { char: "📡", name: "satellite antenna", cat: "Objects", tags: ["radar", "signal", "dish"] },
+      { char: "💉", name: "syringe", cat: "Objects", tags: ["vaccine", "injection", "doctor"] },
+      { char: "🩸", name: "drop of blood", cat: "Objects", tags: ["bleed", "donation", "red"] },
+      { char: "💊", name: "pill", cat: "Objects", tags: ["medicine", "pharmacy", "drug"] },
+      { char: "🩹", name: "adhesive bandage", cat: "Objects", tags: ["bandaid", "heal", "wound"] },
+      { char: "🩺", name: "stethoscope", cat: "Objects", tags: ["doctor", "heartbeat"] },
+      { char: "🚪", name: "door", cat: "Objects", tags: ["entrance", "exit", "wood"] },
+      { char: "🪞", name: "mirror", cat: "Objects", tags: ["reflection", "glass"] },
+      { char: "🪟", name: "window", cat: "Objects", tags: ["view", "glass"] },
+      { char: "🛏️", name: "bed", cat: "Objects", tags: ["sleep", "furniture", "rest"] },
+      { char: "🛋️", name: "couch and lamp", cat: "Objects", tags: ["sofa", "living room"] },
+      { char: "🪑", name: "chair", cat: "Objects", tags: ["seat", "furniture"] },
+      { char: "🚽", name: "toilet", cat: "Objects", tags: ["restroom", "wc", "bathroom"] },
+      { char: "🪠", name: "plunger", cat: "Objects", tags: ["plumbing", "drain"] },
+      { char: "🚿", name: "shower", cat: "Objects", tags: ["bath", "water", "clean"] },
+      { char: "🛁", name: "bathtub", cat: "Objects", tags: ["bath", "relax"] },
+      { char: "🪤", name: "mouse trap", cat: "Objects", tags: ["cheese", "bait"] },
+      { char: "🪒", name: "razor", cat: "Objects", tags: ["shave", "blade"] },
+      { char: "🧴", name: "lotion bottle", cat: "Objects", tags: ["moisturizer", "soap"] },
+      { char: "🧷", name: "safety pin", cat: "Objects", tags: ["pin", "attach"] },
+      { char: "🧹", name: "broom", cat: "Objects", tags: ["clean", "sweep", "witch"] },
+      { char: "🧺", name: "basket", cat: "Objects", tags: ["laundry", "picnic"] },
+      { char: "🧻", name: "roll of paper", cat: "Objects", tags: ["toilet paper", "tissue"] },
+      { char: "🪣", name: "bucket", cat: "Objects", tags: ["pail", "water"] },
+      { char: "🧼", name: "soap", cat: "Objects", tags: ["clean", "wash", "bubbles"] },
+      { char: "🪥", name: "toothbrush", cat: "Objects", tags: ["teeth", "dental", "clean"] },
+      { char: "🧽", name: "sponge", cat: "Objects", tags: ["cleaning", "wash"] },
+      { char: "🧯", name: "fire extinguisher", cat: "Objects", tags: ["fire", "safety"] },
+      { char: "🛒", name: "shopping cart", cat: "Objects", tags: ["store", "buy", "groceries"] },
+      { char: "🎁", name: "wrapped gift", cat: "Objects", tags: ["present", "birthday", "surprise"] },
+      { char: "🎈", name: "balloon", cat: "Objects", tags: ["party", "celebration", "red"] },
+      { char: "🎉", name: "party popper", cat: "Objects", tags: ["celebrate", "tada", "congrats", "confetti"] },
+      { char: "🎊", name: "confetti ball", cat: "Objects", tags: ["party", "celebration"] },
+      { char: "✉️", name: "envelope", cat: "Objects", tags: ["mail", "letter", "email"] },
+      { char: "📦", name: "package", cat: "Objects", tags: ["box", "parcel", "delivery"] },
+      { char: "📝", name: "memo", cat: "Objects", tags: ["note", "paper", "write"] },
+      { char: "📁", name: "file folder", cat: "Objects", tags: ["directory", "document"] },
+      { char: "📅", name: "calendar", cat: "Objects", tags: ["date", "schedule"] },
+      { char: "📌", name: "pushpin", cat: "Objects", tags: ["pin", "notice", "location"] },
+      { char: "📍", name: "round pushpin", cat: "Objects", tags: ["map", "location", "place"] },
+      { char: "📎", name: "paperclip", cat: "Objects", tags: ["attachment", "office"] },
+      { char: "✂️", name: "scissors", cat: "Objects", tags: ["cut", "tool"] },
+      { char: "🔒", name: "locked", cat: "Objects", tags: ["padlock", "secure", "private"] },
+      { char: "🔓", name: "unlocked", cat: "Objects", tags: ["open", "access"] },
+      { char: "🔑", name: "key", cat: "Objects", tags: ["password", "unlock", "access"] },
+      { char: "🔨", name: "hammer", cat: "Objects", tags: ["tool", "build", "hardware"] },
+      { char: "🪓", name: "axe", cat: "Objects", tags: ["wood", "chop", "tool"] },
+      { char: "🔧", name: "wrench", cat: "Objects", tags: ["spanner", "fix", "repair"] },
+      { char: "⚙️", name: "gear", cat: "Objects", tags: ["settings", "cog", "machine", "options"] },
+      { char: "💎", name: "gem stone", cat: "Objects", tags: ["diamond", "jewel", "precious"] },
+      { char: "💰", name: "money bag", cat: "Objects", tags: ["dollar", "cash", "rich"] },
+      { char: "💵", name: "dollar banknote", cat: "Objects", tags: ["money", "currency", "cash"] },
+      { char: "💳", name: "credit card", cat: "Objects", tags: ["payment", "visa", "mastercard"] },
+
+      // Symbols
+      { char: "❤️", name: "red heart", cat: "Symbols", tags: ["love", "romance", "like"] },
+      { char: "🧡", name: "orange heart", cat: "Symbols", tags: ["love", "color"] },
+      { char: "💛", name: "yellow heart", cat: "Symbols", tags: ["friendship", "love"] },
+      { char: "💚", name: "green heart", cat: "Symbols", tags: ["nature", "love"] },
+      { char: "💙", name: "blue heart", cat: "Symbols", tags: ["loyalty", "cold", "love"] },
+      { char: "💜", name: "purple heart", cat: "Symbols", tags: ["bts", "love"] },
+      { char: "🖤", name: "black heart", cat: "Symbols", tags: ["dark", "goth", "love"] },
+      { char: "🤍", name: "white heart", cat: "Symbols", tags: ["pure", "love"] },
+      { char: "🤎", name: "brown heart", cat: "Symbols", tags: ["earth", "love"] },
+      { char: "💔", name: "broken heart", cat: "Symbols", tags: ["breakup", "heartbreak", "sad"] },
+      { char: "❤️‍🔥", name: "heart on fire", cat: "Symbols", tags: ["passion", "lust", "burn"] },
+      { char: "❤️‍🩹", name: "mending heart", cat: "Symbols", tags: ["heal", "recovery"] },
+      { char: "❣️", name: "heart exclamation", cat: "Symbols", tags: ["punctuation", "love"] },
+      { char: "💕", name: "two hearts", cat: "Symbols", tags: ["love", "affection"] },
+      { char: "💞", name: "revolving hearts", cat: "Symbols", tags: ["affection", "romantic"] },
+      { char: "💓", name: "beating heart", cat: "Symbols", tags: ["pulse", "heartbeat"] },
+      { char: "💗", name: "growing heart", cat: "Symbols", tags: ["love", "expand"] },
+      { char: "💖", name: "sparkling heart", cat: "Symbols", tags: ["glitter", "love", "magic"] },
+      { char: "💘", name: "heart with arrow", cat: "Symbols", tags: ["cupid", "valentines"] },
+      { char: "💝", name: "heart with ribbon", cat: "Symbols", tags: ["gift", "chocolate"] },
+      { char: "🔥", name: "fire", cat: "Symbols", tags: ["flame", "lit", "hot", "trending"] },
+      { char: "💥", name: "collision", cat: "Symbols", tags: ["boom", "explode", "pow"] },
+      { char: "✨", name: "sparkles", cat: "Symbols", tags: ["magic", "stars", "shine", "clean", "ai"] },
+      { char: "🌟", name: "glowing star", cat: "Symbols", tags: ["bright", "shine"] },
+      { char: "⭐", name: "star", cat: "Symbols", tags: ["yellow", "favorite", "rating"] },
+      { char: "⚡", name: "high voltage", cat: "Symbols", tags: ["lightning", "electricity", "bolt", "thunder", "power"] },
+      { char: "☀️", name: "sun", cat: "Symbols", tags: ["sunny", "day", "warmth", "bright"] },
+      { char: "🌙", name: "crescent moon", cat: "Symbols", tags: ["night", "sleep", "dark"] },
+      { char: "☁️", name: "cloud", cat: "Symbols", tags: ["weather", "sky", "overcast"] },
+      { char: "🌧️", name: "cloud with rain", cat: "Symbols", tags: ["rain", "storm", "weather"] },
+      { char: "❄️", name: "snowflake", cat: "Symbols", tags: ["winter", "cold", "snow", "ice"] },
+      { char: "🌈", name: "rainbow", cat: "Symbols", tags: ["pride", "colors", "weather"] },
+      { char: "🌊", name: "water wave", cat: "Symbols", tags: ["ocean", "sea", "tsunami", "surf"] },
+      { char: "💯", name: "hundred points", cat: "Symbols", tags: ["100", "perfect", "score", "keep it real"] },
+      { char: "💢", name: "anger symbol", cat: "Symbols", tags: ["mad", "anime", "vein"] },
+      { char: "💤", name: "zzz", cat: "Symbols", tags: ["sleep", "tired", "snore"] },
+      { char: "💨", name: "dashing away", cat: "Symbols", tags: ["fast", "run", "wind", "fart"] },
+      { char: "💦", name: "sweat droplets", cat: "Symbols", tags: ["water", "splashing", "workout"] },
+      { char: "💫", name: "dizzy", cat: "Symbols", tags: ["star", "sparkle"] },
+      { char: "💬", name: "speech balloon", cat: "Symbols", tags: ["chat", "talk", "bubble", "message"] },
+      { char: "👁️‍🗨️", name: "eye in speech bubble", cat: "Symbols", tags: ["witness", "anti bullying"] },
+      { char: "🗨️", name: "left speech bubble", cat: "Symbols", tags: ["chat", "talk"] },
+      { char: "🗯️", name: "right anger bubble", cat: "Symbols", tags: ["shout", "mad"] },
+      { char: "💭", name: "thought balloon", cat: "Symbols", tags: ["thinking", "dream", "cloud"] },
+      { char: "✅", name: "check mark button", cat: "Symbols", tags: ["done", "correct", "green", "yes", "verified"] },
+      { char: "❌", name: "cross mark", cat: "Symbols", tags: ["no", "wrong", "x", "cancel", "red"] },
+      { char: "❎", name: "cross mark button", cat: "Symbols", tags: ["square", "x"] },
+      { char: "➕", name: "plus", cat: "Symbols", tags: ["math", "add"] },
+      { char: "➖", name: "minus", cat: "Symbols", tags: ["math", "subtract"] },
+      { char: "➗", name: "division", cat: "Symbols", tags: ["math", "divide"] },
+      { char: "✖️", name: "multiplication", cat: "Symbols", tags: ["math", "multiply"] },
+      { char: "♾️", name: "infinity", cat: "Symbols", tags: ["forever", "loop"] },
+      { char: "❓", name: "question mark", cat: "Symbols", tags: ["help", "confused", "query"] },
+      { char: "❗", name: "exclamation mark", cat: "Symbols", tags: ["warning", "alert", "attention"] },
+      { char: "⚠️", name: "warning", cat: "Symbols", tags: ["danger", "caution", "triangle", "alert"] },
+      { char: "⛔", name: "no entry", cat: "Symbols", tags: ["forbidden", "stop", "restricted"] },
+      { char: "🚫", name: "prohibited", cat: "Symbols", tags: ["ban", "no"] },
+      { char: "🛑", name: "stop sign", cat: "Symbols", tags: ["octagonal", "halt", "red"] },
+      { char: "♻️", name: "recycling symbol", cat: "Symbols", tags: ["green", "recycle", "environment"] },
+      { char: "🏧", name: "ATM sign", cat: "Symbols", tags: ["bank", "cash"] },
+      { char: "🚮", name: "litter in bin sign", cat: "Symbols", tags: ["trash", "clean"] },
+      { char: "🚰", name: "potable water", cat: "Symbols", tags: ["drink", "tap"] },
+      { char: "♿", name: "wheelchair symbol", cat: "Symbols", tags: ["accessible", "handicap"] },
+      { char: "🚹", name: "men's room", cat: "Symbols", tags: ["restroom", "male"] },
+      { char: "🚺", name: "women's room", cat: "Symbols", tags: ["restroom", "female"] },
+      { char: "🚻", name: "restroom", cat: "Symbols", tags: ["toilet", "wc"] },
+      { char: "🚼", name: "baby symbol", cat: "Symbols", tags: ["changing station", "infant"] },
+      { char: "🚾", name: "water closet", cat: "Symbols", tags: ["restroom", "toilet"] },
+      { char: "🛂", name: "passport control", cat: "Symbols", tags: ["customs", "airport"] },
+      { char: "🛃", name: "customs", cat: "Symbols", tags: ["border", "luggage"] },
+      { char: "🛄", name: "baggage claim", cat: "Symbols", tags: ["airport", "luggage"] },
+      { char: "🛅", name: "left luggage", cat: "Symbols", tags: ["locker", "storage"] },
+      { char: "⚛️", name: "atom symbol", cat: "Symbols", tags: ["physics", "science", "nuclear"] },
+      { char: "🕉️", name: "om", cat: "Symbols", tags: ["hinduism", "yoga", "sacred"] },
+      { char: "✡️", name: "star of David", cat: "Symbols", tags: ["judaism", "jewish"] },
+      { char: "☸️", name: "wheel of dharma", cat: "Symbols", tags: ["buddhism", "dharma"] },
+      { char: "☯️", name: "yin yang", cat: "Symbols", tags: ["taoism", "balance", "zen"] },
+      { char: "✝️", name: "latin cross", cat: "Symbols", tags: ["christianity", "jesus", "church"] },
+      { char: "☦️", name: "orthodox cross", cat: "Symbols", tags: ["christianity"] },
+      { char: "☪️", name: "star and crescent", cat: "Symbols", tags: ["islam", "muslim"] },
+      { char: "☮️", name: "peace symbol", cat: "Symbols", tags: ["pacifism", "hippie"] },
+      { char: "🕎", name: "menorah", cat: "Symbols", tags: ["hanukkah", "candles"] },
+      { char: "🔯", name: "dotted six-pointed star", cat: "Symbols", tags: ["star"] },
+      { char: "♈", name: "Aries", cat: "Symbols", tags: ["zodiac", "astrology", "ram"] },
+      { char: "♉", name: "Taurus", cat: "Symbols", tags: ["zodiac", "astrology", "bull"] },
+      { char: "♊", name: "Gemini", cat: "Symbols", tags: ["zodiac", "astrology", "twins"] },
+      { char: "♋", name: "Cancer", cat: "Symbols", tags: ["zodiac", "astrology", "crab"] },
+      { char: "♌", name: "Leo", cat: "Symbols", tags: ["zodiac", "astrology", "lion"] },
+      { char: "♍", name: "Virgo", cat: "Symbols", tags: ["zodiac", "astrology"] },
+      { char: "♎", name: "Libra", cat: "Symbols", tags: ["zodiac", "astrology", "balance"] },
+      { char: "♏", name: "Scorpio", cat: "Symbols", tags: ["zodiac", "astrology", "scorpion"] },
+      { char: "♐", name: "Sagittarius", cat: "Symbols", tags: ["zodiac", "astrology", "archer"] },
+      { char: "♑", name: "Capricorn", cat: "Symbols", tags: ["zodiac", "astrology", "goat"] },
+      { char: "♒", name: "Aquarius", cat: "Symbols", tags: ["zodiac", "astrology", "water bearer"] },
+      { char: "♓", name: "Pisces", cat: "Symbols", tags: ["zodiac", "astrology", "fish"] },
+      { char: "⛎", name: "Ophiuchus", cat: "Symbols", tags: ["zodiac", "serpent"] },
+      { char: "▶️", name: "play button", cat: "Symbols", tags: ["video", "start"] },
+      { char: "⏸️", name: "pause button", cat: "Symbols", tags: ["wait", "stop"] },
+      { char: "⏹️", name: "stop button", cat: "Symbols", tags: ["halt", "square"] },
+      { char: "⏺️", name: "record button", cat: "Symbols", tags: ["circle", "red"] },
+      { char: "⏭️", name: "next track", cat: "Symbols", tags: ["skip", "forward"] },
+      { char: "⏮️", name: "last track", cat: "Symbols", tags: ["back", "rewind"] },
+      { char: "⏩", name: "fast-forward", cat: "Symbols", tags: ["speed", "forward"] },
+      { char: "⏪", name: "fast reverse", cat: "Symbols", tags: ["rewind", "backward"] },
+      { char: "🔀", name: "shuffle tracks", cat: "Symbols", tags: ["random", "music"] },
+      { char: "🔁", name: "repeat button", cat: "Symbols", tags: ["loop", "again"] },
+      { char: "🔂", name: "repeat single", cat: "Symbols", tags: ["loop one"] },
+      { char: "🎵", name: "musical note", cat: "Symbols", tags: ["song", "melody", "sound"] },
+      { char: "🎶", name: "musical notes", cat: "Symbols", tags: ["music", "singing"] },
+      { char: "🔈", name: "speaker low volume", cat: "Symbols", tags: ["sound", "quiet"] },
+      { char: "🔉", name: "speaker medium volume", cat: "Symbols", tags: ["audio"] },
+      { char: "🔊", name: "speaker high volume", cat: "Symbols", tags: ["loud", "sound"] },
+      { char: "🔇", name: "muted speaker", cat: "Symbols", tags: ["silence", "mute"] },
+      { char: "🔔", name: "bell", cat: "Symbols", tags: ["notification", "alarm", "chime"] },
+      { char: "🔕", name: "bell with slash", cat: "Symbols", tags: ["silent", "mute notifications"] },
+      { char: "📢", name: "loudspeaker", cat: "Symbols", tags: ["announcement", "shout", "megaphone"] },
+      { char: "📣", name: "megaphone", cat: "Symbols", tags: ["cheer", "broadcast"] },
+      { char: "🔘", name: "radio button", cat: "Symbols", tags: ["toggle", "circle"] },
+      { char: "🔴", name: "red circle", cat: "Symbols", tags: ["dot", "ball"] },
+      { char: "🟠", name: "orange circle", cat: "Symbols", tags: ["dot"] },
+      { char: "🟡", name: "yellow circle", cat: "Symbols", tags: ["dot"] },
+      { char: "🟢", name: "green circle", cat: "Symbols", tags: ["dot", "online"] },
+      { char: "🔵", name: "blue circle", cat: "Symbols", tags: ["dot"] },
+      { char: "🟣", name: "purple circle", cat: "Symbols", tags: ["dot"] },
+      { char: "⚫", name: "black circle", cat: "Symbols", tags: ["dot", "dark"] },
+      { char: "⚪", name: "white circle", cat: "Symbols", tags: ["dot", "light"] },
+      { char: "⬛", name: "black large square", cat: "Symbols", tags: ["box", "dark"] },
+      { char: "⬜", name: "white large square", cat: "Symbols", tags: ["box", "light"] },
+
+      // Generic Flags
+      { char: "🏁", name: "chequered flag", cat: "Flags", tags: ["finish line", "race", "f1", "winner"] },
+      { char: "🚩", name: "triangular flag", cat: "Flags", tags: ["red flag", "warning", "post"] },
+      { char: "🎌", name: "crossed flags", cat: "Flags", tags: ["japan", "celebrate"] },
+      { char: "🏴", name: "black flag", cat: "Flags", tags: ["pirate", "dark"] },
+      { char: "🏳️", name: "white flag", cat: "Flags", tags: ["surrender", "peace"] },
+      { char: "🏳️‍🌈", name: "rainbow flag", cat: "Flags", tags: ["pride", "lgbtq", "equality"] },
+      { char: "🏳️‍⚧️", name: "transgender flag", cat: "Flags", tags: ["trans", "pride"] },
+      { char: "🏴‍☠️", name: "pirate flag", cat: "Flags", tags: ["jolly roger", "skull", "bones"] }
+    ];
+
+    // Build the complete country flags list programmatically for 100% world coverage
+    const COUNTRY_FLAG_EMOJIS = COUNTRIES_LIST.map(country => ({
+      char: getCountryFlag(country.code),
+      name: `${country.name} flag`,
+      cat: "Flags",
+      tags: ["flag", country.code.toLowerCase(), country.name.toLowerCase(), ...(country.tags || [])]
+    }));
+
+    // Merge baseline and complete flags
+    const EMOJI_DATABASE = [...BASE_DATABASE, ...COUNTRY_FLAG_EMOJIS];
+
+    const container = document.getElementById('emoji-container');
+    const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-btn');
+    const emptyState = document.getElementById('empty-state');
+    const resetSearchBtn = document.getElementById('reset-search-btn');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const variantPopover = document.getElementById('variant-popover');
+
+    let toastTimeout = null;
+    let rotationDegrees = 0;
+    let activeLongPressTimer = null;
+    let longPressTriggered = false;
+
+    // Dismiss variant popover on outside click or scroll
+    function hideVariantPopover() {
+      variantPopover.classList.add('hidden');
+      variantPopover.innerHTML = '';
+    }
+
+    window.addEventListener('click', (e) => {
+      if (!variantPopover.contains(e.target) && !e.target.closest('.emoji-card')) {
+        hideVariantPopover();
+      }
+    });
+
+    window.addEventListener('scroll', hideVariantPopover, { passive: true });
+
+    // Show floating popover with skin-tone variations
+    function showVariantPopover(targetBtn, emojiItem) {
+      const variants = emojiItem.variants || (emojiItem.skinTone ? generateSkinToneVariants(emojiItem.char, emojiItem.name) : []);
+      if (!variants || variants.length <= 1) return;
+
+      variantPopover.innerHTML = '';
+      variants.forEach(variant => {
+        const vBtn = document.createElement('button');
+        vBtn.type = 'button';
+        vBtn.className = 'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-[#d8e2d1] dark:hover:bg-white/10 transition-colors text-2xl active:scale-95';
+        vBtn.innerHTML = `<span class="emoji-font leading-none select-none">${variant.char}</span>`;
+        vBtn.setAttribute('title', variant.name);
+        vBtn.setAttribute('aria-label', `Copy ${variant.name}`);
+
+        vBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          copyToClipboard(variant.char, variant.name);
+          hideVariantPopover();
+        });
+
+        variantPopover.appendChild(vBtn);
+      });
+
+      // Position the popover right above the card
+      const rect = targetBtn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const topY = rect.top;
+
+      variantPopover.style.left = `${Math.max(130, Math.min(window.innerWidth - 130, centerX))}px`;
+      variantPopover.style.top = `${topY}px`;
+      variantPopover.classList.remove('hidden');
+
+      // Subtle haptic vibration if supported
+      if (navigator.vibrate) {
+        navigator.vibrate(35);
+      }
+    }
+
+    // Theme Switcher Logic (Dark mode default, Beige light mode)
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.contains('dark');
+      
+      // Rotate Yin-Yang smoothly forward 180 degrees every click
+      rotationDegrees += 180;
+      themeIcon.style.transform = `rotate(${rotationDegrees}deg)`;
+
+      if (isDark) {
+        htmlEl.classList.remove('dark');
+      } else {
+        htmlEl.classList.add('dark');
+      }
+    }
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Helper to group array by property
+    function groupBy(array, key) {
+      return array.reduce((result, currentItem) => {
+        (result[currentItem[key]] = result[currentItem[key]] || []).push(currentItem);
+        return result;
+      }, {});
+    }
+
+    // Function to render items
+    function renderEmojis(items, isSearching = false) {
+      container.innerHTML = '';
+      hideVariantPopover();
+
+      const totalCount = items.length;
+
+      if (totalCount === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      if (isSearching) {
+        // Flat grid for search results - clean borderless emoji grid with spacious gap
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(4rem,1fr))] gap-3 sm:gap-4 md:gap-5';
+
+        items.forEach(emoji => {
+          grid.appendChild(createEmojiButton(emoji));
+        });
+
+        container.appendChild(grid);
+      } else {
+        // Grouped by Category
+        const grouped = groupBy(items, 'cat');
+
+        for (const [catName, emojiList] of Object.entries(grouped)) {
+          const section = document.createElement('section');
+          section.className = 'space-y-3';
+
+          // Category Header
+          const header = document.createElement('div');
+          header.className = 'flex items-center space-x-2 border-b border-[#2A2E23]/10 dark:border-white/10 pb-2';
+          header.innerHTML = `
+            <h2 class="text-[11px] uppercase tracking-wider font-semibold text-[#2A2E23]/75 dark:text-neutral-400 font-mono">${catName}</h2>
+          `;
+          section.appendChild(header);
+
+          // Grid of emojis - clean borderless glyph layout with spacious gap
+          const grid = document.createElement('div');
+          grid.className = 'grid grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(4rem,1fr))] gap-3 sm:gap-4 md:gap-5';
+
+          emojiList.forEach(emoji => {
+            grid.appendChild(createEmojiButton(emoji));
+          });
+
+          section.appendChild(grid);
+          container.appendChild(section);
+        }
+      }
+    }
+
+    // Creates individual interactive emoji cell button with hold-to-vary support (no box, no text caption)
+    function createEmojiButton(item) {
+      const hasVariants = item.skinTone || (item.variants && item.variants.length > 1);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `emoji-card group relative flex items-center justify-center aspect-square p-1 rounded-xl hover:scale-125 focus:scale-125 transition-transform duration-150 focus:outline-none select-none ${hasVariants ? 'has-variants' : ''}`;
+      btn.setAttribute('aria-label', `Copy ${item.name} (${item.char})`);
+      btn.setAttribute('title', hasVariants ? `${item.name} (hold for skin tones)` : item.name);
+
+      btn.innerHTML = `<span class="emoji-font leading-none select-none">${item.char}</span>`;
+
+      // Pointer event listeners for prolonged press / hold
+      const startHold = (e) => {
+        if (!hasVariants) return;
+        longPressTriggered = false;
+        activeLongPressTimer = setTimeout(() => {
+          longPressTriggered = true;
+          showVariantPopover(btn, item);
+        }, 380);
+      };
+
+      const cancelHold = () => {
+        if (activeLongPressTimer) {
+          clearTimeout(activeLongPressTimer);
+          activeLongPressTimer = null;
+        }
+      };
+
+      btn.addEventListener('pointerdown', startHold);
+      btn.addEventListener('pointerup', cancelHold);
+      btn.addEventListener('pointerleave', cancelHold);
+      btn.addEventListener('pointercancel', cancelHold);
+
+      // Support right-click to open variants immediately
+      btn.addEventListener('contextmenu', (e) => {
+        if (hasVariants) {
+          e.preventDefault();
+          showVariantPopover(btn, item);
+        }
+      });
+
+      // Standard click handler (fires if not consumed by long press)
+      btn.addEventListener('click', (e) => {
+        if (longPressTriggered) {
+          longPressTriggered = false;
+          return;
+        }
+        copyToClipboard(item.char, item.name);
+      });
+
+      return btn;
+    }
+
+    // Reliable fallback clipboard copy using execCommand as mandated by iframe constraints
+    function copyToClipboard(text, name) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+
+      let success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (err) {
+        console.error('Copy command error:', err);
+      }
+      document.body.removeChild(textarea);
+
+      if (success) {
+        showToast(text, name);
+      } else {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text)
+            .then(() => showToast(text, name))
+            .catch(() => showToast(text, 'Copied!'));
+        }
+      }
+    }
+
+    // Centered Toast Notification Handler
+    function showToast(emoji, name) {
+      const toast = document.getElementById('toast');
+      const toastEmoji = document.getElementById('toast-emoji');
+      const toastText = document.getElementById('toast-text');
+
+      toastEmoji.textContent = emoji;
+      toastText.textContent = name;
+
+      // Animate from center with smooth pop
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+      toast.classList.add('opacity-100', 'scale-100');
+
+      if (toastTimeout) {
+        clearTimeout(toastTimeout);
+      }
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'scale-100');
+        toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+      }, 1600);
+    }
+
+    // Live filter function matching name, category, and keyword tags
+    function filterEmojis() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      if (!query) {
+        renderEmojis(EMOJI_DATABASE, false);
+        return;
+      }
+
+      const terms = query.split(/\s+/).filter(Boolean);
+
+      const filtered = EMOJI_DATABASE.filter(item => {
+        const itemText = `${item.char} ${item.name} ${item.cat} ${item.tags.join(' ')}`.toLowerCase();
+        return terms.every(term => itemText.includes(term));
+      });
+
+      renderEmojis(filtered, true);
+    }
+
+    // Search events
+    searchInput.addEventListener('input', filterEmojis);
+
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.focus();
+      filterEmojis();
+    });
+
+    resetSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.focus();
+      filterEmojis();
+    });
+
+    // Keyboard shortcut: Pressing "/" focuses search, "Escape" clears it
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      } else if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        filterEmojis();
+        searchInput.blur();
+        hideVariantPopover();
+      }
+    });
+
+    // Initial render
+    renderEmojis(EMOJI_DATABASE, false);
+  </script>
+</body>
+</html>
