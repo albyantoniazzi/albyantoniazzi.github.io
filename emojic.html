@@ -171,7 +171,7 @@
           autocomplete="off"
           spellcheck="false"
           aria-label="Search emojis"
-          class="w-full pl-9 pr-8 py-1.5 sm:py-2 bg-[#d8e2d1] hover:bg-[#d0dc8] focus:bg-[#d0ddc7] dark:bg-[#2d3030] dark:hover:bg-[#353939] dark:focus:bg-[#353939] text-sm text-[#2A2E23] dark:text-white rounded-full border-0 outline-none focus:outline-none focus:ring-0 font-sans shadow-sm transition-colors"
+          class="w-full pl-9 pr-8 py-1.5 sm:py-2 bg-white/80 hover:bg-white/80 focus:bg-white/80 dark:bg-[#2d3030]/80 dark:hover:bg-[#353939]/80 dark:focus:bg-[#353939]/80 text-sm text-[#2A2E23] dark:text-white rounded-full border-0 outline-none focus:outline-none focus:ring-0 font-sans shadow-sm transition-colors backdrop-blur-sm"
         />
 
         <!-- Clear Search Button -->
@@ -234,7 +234,7 @@
   <!-- Long-press Variant Selector Popover -->
   <div 
     id="variant-popover" 
-    class="hidden bg-[#EBF1E5]/95 dark:bg-[#282B2B]/95 border border-[#2A2E23]/15 dark:border-neutral-700 rounded-xl p-1.5 shadow-2xl backdrop-blur-md flex items-center gap-1 select-none"
+    class="hidden bg-[#EBF1E5]/95 dark:bg-[#282B2B]/95 border border-[#2A2E23]/15 dark:border-neutral-700 rounded-2xl p-2 sm:p-2.5 shadow-2xl backdrop-blur-md flex items-center gap-2.5 sm:gap-3.5 select-none"
     role="dialog"
     aria-label="Emoji variations"
   >
@@ -1339,7 +1339,7 @@
       variants.forEach(variant => {
         const vBtn = document.createElement('button');
         vBtn.type = 'button';
-        vBtn.className = 'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg hover:bg-[#d8e2d1] dark:hover:bg-white/10 transition-colors text-2xl active:scale-95';
+        vBtn.className = 'w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl hover:bg-[#d8e2d1] dark:hover:bg-white/10 transition-all text-2xl sm:text-[1.75rem] active:scale-95';
         vBtn.innerHTML = `<span class="emoji-font leading-none select-none">${variant.char}</span>`;
         vBtn.setAttribute('title', variant.name);
         vBtn.setAttribute('aria-label', `Copy ${variant.name}`);
@@ -1358,7 +1358,7 @@
       const centerX = rect.left + rect.width / 2;
       const topY = rect.top;
 
-      variantPopover.style.left = `${Math.max(130, Math.min(window.innerWidth - 130, centerX))}px`;
+      variantPopover.style.left = `${Math.max(170, Math.min(window.innerWidth - 170, centerX))}px`;
       variantPopover.style.top = `${topY}px`;
       variantPopover.classList.remove('hidden');
 
