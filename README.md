@@ -1,3 +1,3 @@
-<span style="font-size: larger;">【 Alberto Antoniazzi Archive 】</span>
+<span style="font-size: 24px;">【 Alberto Antoniazzi Archive 】</span>
 
 🔗 https://albyantoniazzi.github.io/
